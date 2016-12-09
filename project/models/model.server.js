@@ -1,4 +1,5 @@
 module.exports = function() {
+    "use strict"
 
     var mongoose = require('mongoose');
     var connectionString = 'mongodb://localhost/web-project-fall-2016';
@@ -9,16 +10,21 @@ module.exports = function() {
             process.env.MLAB_DB_URL_END + '/' +
             process.env.MLAB_DB_NAME;
     }
-    //mongoose.connect('mongodb://localhost/webappmaker');
     mongoose.connect(connectionString);
 
-    var models;
-    models = {
-        userModel: require("./user/user.model.server.js")()
+    var userModel = require("./user/user.model.server.js")();
+    var bookshelfModel = require("./bookshelf/bookshelf.model.server.js")();
+    var bookModel = require("./book/book.model.server.js")();
 
+    var model = {
+        userModel: userModel,
+        bookshelfModel: bookshelfModel,
+        bookModel: bookModel
     };
 
-    //userModel.setModel(models);
+    userModel.setModel(model);
+    bookshelfModel.setModel(model);
+    bookModel.setModel(model);
 
-    return models;
+    return model;
 };

@@ -1,52 +1,72 @@
-(function () {
+(function() {
     angular
-        .module ("MyBooks")
-        .config (Configure);
+        .module("BookReviewApp")
+        .config(Config);
 
-    function Configure ($routeProvider) {
+    function Config($routeProvider) {
         $routeProvider
-        // authentication routes
-            .when ("/", {
+            .when("/login", {
                 templateUrl: "views/user/login.view.client.html",
                 controller: "LoginController",
                 controllerAs: "model"
             })
-            .when ("/register", {
+            .when("/register", {
                 templateUrl: "views/user/register.view.client.html",
                 controller: "RegisterController",
                 controllerAs: "model"
             })
-            .when ("/login", {
-                templateUrl: "views/user/login.view.client.html",
-                controller: "LoginController",
-                controllerAs: "model"
-            })
-            .when ("/user/:uid", {
+            .when("/user/:uid", {
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
                 controllerAs: "model",
-                resolve: { loggedin: checkLoggedin }
-
+                resolve: {
+                    checkLogin: checkLogin
+                }
             })
-            .otherwise ({
-                redirectTo: "/"
+            .when("/user/:uid/bookshelf", {
+                templateUrl: "views/bookshelf/bookshelf-list.view.client.html",
+                controller: "BookshelfListController",
+                controllerAs: "model"
+            })
+            .when("/user/:uid/bookshelf/:bsid/book", {
+                templateUrl: "views/book/book-list.view.client.html",
+                controller: "BookListController",
+                controllerAs: "model"
+            })
+            .when("/user/:uid/book/search", {
+                templateUrl: "views/book/book-search.view.client.html",
+                controller: "BookSearchController",
+                controllerAs: "model"
+            })
+            .when("/user/:uid/book/info/:googleBookId", {
+                templateUrl: "views/book/book-info.view.client.html",
+                controller: "BookInfoController",
+                controllerAs: "model"
+            })
+            .when("/user/:uid/bookshelf/:bsid/book/:bid", {
+                templateUrl: "views/book/book.view.client.html",
+                controller: "BookController",
+                controllerAs: "model"
+            })
+            .otherwise({
+                redirectTo: "/login"
             });
+
+        function checkLogin($q, UserService, $location) {
+            var deferred = $q.defer();
+            UserService
+                .checkLogin()
+                .success(
+                    function (user) {
+                        if (user !== '0') {
+                            deferred.resolve();
+                        } else {
+                            deferred.reject();
+                            $location.url("/login");
+                        }
+                    }
+                );
+            return deferred.promise;
+        }
     }
-
-    var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
-        var deferred = $q.defer();
-        $http.get('/api/loggedin').success(function(user) {
-            $rootScope.errorMessage = null;
-            if (user !== '0') {
-                $rootScope.currentUser = user;
-                deferred.resolve();
-            } else {
-                deferred.reject();
-                $location.url('/');
-            }
-        });
-        return deferred.promise;
-    };
-
-
 })();

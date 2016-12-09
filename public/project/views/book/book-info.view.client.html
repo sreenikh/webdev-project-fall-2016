@@ -1,0 +1,56 @@
+<div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid row">
+            <div class="container-fluid">
+                <p class="navbar-text pull-left">
+                    <a ng-click="model.navigateToEditWidget()"
+                       class="pointer">
+                        <span class="glyphicon glyphicon-menu-left footer-color-black"></span></a>
+                </p>
+                <a class="navbar-brand"><b>Search Books</b></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="profile-body">
+            <div class="btn-group btn-block" data-toggle="buttons-radio">
+                <button type="button" ng-click="model.addToBookshelf('CURRENTLY_READING')" class="btn btn-success">Add to "Currently Reading"</button>
+                <button type="button" ng-click="model.addToBookshelf('READ')" class="btn btn-warning">Add to "Previously Read"</button>
+                <button type="button" ng-click="model.addToBookshelf('TO_READ')" class="btn btn-primary">Add to "To Be Read"</button>
+            </div>
+            <br>
+            {{model.book.id}}
+            <br>
+            {{model.book.volumeInfo.title}}
+            <br>
+            {{model.book.volumeInfo.subtitle}}
+            <br>
+            {{model.book.volumeInfo.authors}}
+            <br>
+            <p>___________________________________________________________________________</p>
+            <br>
+            {{model.book.volumeInfo.title}}
+            <br>
+            {{model.book.id}}
+            <br>
+            {{model.book.volumeInfo.imageLinks.smallThumbnail}}
+            <br>
+            {{model.book.volumeInfo.imageLinks.thumbnail}}
+        </div>
+    </div>
+
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container-fluid row">
+            <div class="container-fluid">
+                <p class="navbar-text pull-right">
+                    <a ng-click="model.navigateToProfile()"
+                       class="pointer">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </nav>
+
+</div>

@@ -1,3 +1,3 @@
 (function(){
-    angular.module("BookReviewApp", ["ngRoute","jgaDirectives","textAngular"]);
+    angular.module("BookReviewApp", ["ngRoute"]);
 })();

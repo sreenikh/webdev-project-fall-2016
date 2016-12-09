@@ -1,0 +1,59 @@
+<div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid row">
+            <div class="container-fluid">
+                <p class="navbar-text pull-left">
+                    <a ng-click="model.navigateToEditWidget()"
+                       class="pointer">
+                        <span class="glyphicon glyphicon-menu-left footer-color-black"></span></a>
+                </p>
+                <a class="navbar-brand"><b>Search Books</b></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="profile-body">
+            <div class="input-group">
+                <input ng-model="model.searchText" type="text" class="form-control">
+                <span class="input-group-btn">
+                    <a ng-click="model.searchForBooks()"
+                       class="btn btn-info"
+                       type="button">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </a>
+                </span>
+            </div>
+            <br>
+            <div class="row">
+                <div ng-repeat="book in model.books"
+                     ng-click="model.navigateToBookView(book)">
+                    {{book.id}}
+                    <br>
+                    {{book.volumeInfo.title}}
+                    <br>
+                    {{book.volumeInfo.subtitle}}
+                    <br>
+                    {{book.volumeInfo.authors}}
+                    <br>
+                    <p>____________________________________________________________________________</p>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container-fluid row">
+            <div class="container-fluid">
+                <p class="navbar-text pull-right">
+                    <a ng-click="model.navigateToProfile()"
+                       class="pointer">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </nav>
+
+</div>
