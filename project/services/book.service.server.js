@@ -5,6 +5,7 @@ module.exports = function (app, model) {
     app.get('/api/bookshelf/:bookshelfId/book', findAllBooksForBookshelf);
     app.get('/api/book/:bookId', findBookById);
     app.put('/api/book/:bookId', updateBook);
+    app.put('/api/book/movetobookshelf/:bookId', moveToBookshelf);
     app.delete('/api/book/:bookId', deleteBook);
 
     function createBook(req, res) {
@@ -81,6 +82,50 @@ module.exports = function (app, model) {
                     res.sendStatus(400).send(error);
                 }
             );
+    }
+
+    function moveToBookshelf(req, res) {
+        var bookId = req.params.bookId;
+        var bookshelfWithModifiedType = req.body;
+        model
+            .bookshelfModel
+            .findAllBookshelvesForUser(bookshelfWithModifiedType._user)
+            .then(
+                function (listOfBookshelves) {
+                    var oldBookshelf = null;
+                    for (var bs in listOfBookshelves) {
+                        if (listOfBookshelves[bs].name === bookshelfWithModifiedType.name) {
+                            oldBookshelf = listOfBookshelves[bs];
+                            break;
+                        }
+                    }
+                    var toBeMovedToBookshelf = null;
+                    for (var bs in listOfBookshelves) {
+                        if (listOfBookshelves[bs].type === bookshelfWithModifiedType.type) {
+                            toBeMovedToBookshelf = listOfBookshelves[bs];
+                            break;
+                        }
+                    }
+                    if (null !== oldBookshelf && null !== toBeMovedToBookshelf) {
+                        model
+                            .bookModel
+                            .moveBetweenBookshelves(bookId, oldBookshelf._id, toBeMovedToBookshelf._id)
+                            .then(
+                                function (response) {
+                                    res.send(true);
+                                },
+                                function (error) {
+                                    res.sendStatus(400).send(error);
+                                }
+                            )
+                    } else {
+                        res.send(false);
+                    }
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            )
     }
 
     function deleteBook(req, res) {

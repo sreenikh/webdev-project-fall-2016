@@ -13,6 +13,7 @@ module.exports = function () {
         findBooksByBookshelfIdAndName: findBooksByBookshelfIdAndName,
         updateBook: updateBook,
         deleteBook: deleteBook,
+        moveBetweenBookshelves: moveBetweenBookshelves,
         setModel: setModel
     };
     return api;
@@ -27,7 +28,7 @@ module.exports = function () {
                         .findBookshelfById(bookshelfId)
                         .then(
                             function (bookshelf) {
-                                bookshelf.books.push(newBook);
+                                bookshelf.books.push(newBook._id);
                                 newBook._bookshelf = bookshelf._id;
                                 newBook.save();
                                 bookshelf.save();
@@ -82,6 +83,43 @@ module.exports = function () {
                 description: book.description
             }}
         );
+    }
+
+    function moveBetweenBookshelves(bookId, oldBookshelfId, toBeMovedToBookshelfId) {
+        return BookModel
+            .findById(bookId)
+            .then(
+                function (book) {
+                    return model
+                        .bookshelfModel
+                        .findBookshelfById(oldBookshelfId)
+                        .then(
+                            function (oldBookshelf) {
+                                return model
+                                    .bookshelfModel
+                                    .findBookshelfById(toBeMovedToBookshelfId)
+                                    .then(
+                                        function (toBeMovedToBookshelf) {
+                                            const indexInOldBookshelf = oldBookshelf.books.indexOf(book._id);
+                                            oldBookshelf.books.splice(indexInOldBookshelf, 1);
+                                            oldBookshelf.save();
+                                            toBeMovedToBookshelf.books.push(book._id);
+                                            book._bookshelf = toBeMovedToBookshelf._id;
+                                            book.save();
+                                            toBeMovedToBookshelf.save();
+                                            return true;
+                                        },
+                                        function (error) {
+                                        }
+                                    )
+                            },
+                            function (error) {
+                            }
+                        )
+                },
+                function (error) {
+                }
+            )
     }
 
     /*function deleteBook(bookId) {

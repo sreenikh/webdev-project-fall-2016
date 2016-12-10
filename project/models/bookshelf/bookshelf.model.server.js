@@ -28,7 +28,7 @@ module.exports = function () {
                         .findUserById(userId)
                         .then(
                             function (user) {
-                                user.bookshelves.push(newBookshelf);
+                                user.bookshelves.push(newBookshelf._id);
                                 newBookshelf._user = user._id;
                                 user.save();
                                 newBookshelf.save();

@@ -46,10 +46,11 @@
 
         var userId = $routeParams['uid'];
         var bookshelfId = $routeParams['bsid'];
-        var bid = $routeParams['bid'];
+        var bookId = $routeParams['bid'];
 
         vm.checkBookshelf = checkBookshelf;
         vm.deleteBook = deleteBook;
+        vm.moveToBookshelf = moveToBookshelf;
         var bookshelvesForUser = [];
 
         function init() {
@@ -61,7 +62,7 @@
                 .error(function (error) {
                 });
             BookService
-                .findBookById(bid)
+                .findBookById(bookId)
                 .success(function (book) {
                     vm.book = book;
                 })
@@ -84,12 +85,25 @@
 
         function deleteBook(book) {
             BookService
-                .deleteBook(bid)
+                .deleteBook(bookId)
                 .success(function (response) {
-                    $location.url("/user/" + userId + "/bookshelf/" + bookshelfId + "/book")
+                    $location.url("/user/" + userId + "/bookshelf/" + bookshelfId + "/book");
                 })
-                .error(function () {
+                .error(function (error) {
                 });
+        }
+
+        function moveToBookshelf(bookshelfType) {
+            var bookshelfWithNewType = vm.bookshelf
+            bookshelfWithNewType.type = bookshelfType;
+            BookService
+                .moveToBookshelf(bookId, bookshelfWithNewType)
+                .success(function (response) {
+                    $location.url("/user/" + userId + "/bookshelf/" + bookshelfId + "/book");
+                })
+                .error(function (error) {
+                });
+
         }
     }
 

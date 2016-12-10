@@ -12,7 +12,8 @@
             findBookById: findBookById,
             searchForBooks: searchForBooks,
             findBookInfo: findBookInfo,
-            deleteBook: deleteBook
+            deleteBook: deleteBook,
+            moveToBookshelf: moveToBookshelf
         };
         return api;
 
@@ -48,6 +49,11 @@
         function deleteBook(bookId) {
             var url = '/api/book/' + bookId;
             return $http.delete(url);
+        }
+
+        function moveToBookshelf(bookId, bookshelfWithNewType) {
+            var url = '/api/book/movetobookshelf/' + bookId;
+            return $http.put(url, bookshelfWithNewType);
         }
     }
 })();
