@@ -2,12 +2,17 @@
     angular
         .module("BookReviewApp")
         .config(Config);
-
     function Config($routeProvider) {
         $routeProvider
             .when("/login", {
                 templateUrl: "views/user/login.view.client.html",
                 controller: "LoginController",
+                controllerAs: "model"
+            })
+        // authentication routes
+            .when ("/", {
+                templateUrl: "views/home/public.home.view.client.html",
+                controller: "HomePageController",
                 controllerAs: "model"
             })
             .when("/register", {
@@ -19,13 +24,18 @@
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
                 controllerAs: "model",
-                resolve: {
-                    checkLogin: checkLogin
-                }
+                //resolve: {
+                //    checkLogin: checkLogin
+                //}
             })
             .when("/user/:uid/bookshelf", {
                 templateUrl: "views/bookshelf/bookshelf-list.view.client.html",
                 controller: "BookshelfListController",
+                controllerAs: "model"
+            })
+            .when("/user/:uid/friends", {
+                templateUrl: "views/friends/friends.list.view.client.html",
+                controller: "FriendsListController",
                 controllerAs: "model"
             })
             .when("/user/:uid/bookshelf/:bsid/book", {

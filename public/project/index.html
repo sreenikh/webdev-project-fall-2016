@@ -1,30 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="BookReviewApp">
 <head>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="viewport" content="initial-scale=1.25, user-scalable = no">
-    <title>PlaceConnect</title>
-    <!-- load BootStrap, Angular and Font Awesome CSS  -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
+
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
+
+
+    <title>Read together</title>
+
     <link href="css/style.css" rel="stylesheet"/>
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js", rel="stylesheet"></script>
+
     <script src="app.js"></script>
     <script src="config.js"></script>
     <script src="views/user/user.controller.client.js"></script>
     <script src="views/bookshelf/bookshelf.contoller.client.js"></script>
     <script src="views/book/book.controller.client.js"></script>
+    <script src="views/home/home.controller.client.js"></script>
     <script src="services/user.service.client.js"></script>
     <script src="services/bookshelf.service.client.js"></script>
     <script src="services/book.service.client.js"></script>
 
 </head>
 <body>
-<div ng-view></div>
+<div class="container">
+
+    <div ng-view></div>
+</div>
+
 </body>
 </html>

@@ -56,6 +56,7 @@ module.exports = function (app, model) {
                 },
                 function (error) {
                     done(error, null);
+
                 }
             );
     }
@@ -79,9 +80,11 @@ module.exports = function (app, model) {
                 },
                 function (error) {
                     return done(error);
+
                 }
             );
     }
+
 
     function login(req, res) {
         var user = req.user;
@@ -128,7 +131,11 @@ module.exports = function (app, model) {
                                     res.sendStatus(400).send(error);
                                 }
                             );
-                    }
+
+
+
+
+                      }
                 },
                 function (error) {
                     res.sendStatus(400).send(error);
@@ -136,11 +143,12 @@ module.exports = function (app, model) {
             );
     }
 
+
     function findUser(req, res) {
         var query = req.query;
-        if (query.password && query.username) {
+        if(query.password && query.username) {
             findUserByCredentials(req, res);
-        } else if (query.username) {
+        } else if(query.username) {
             findUserByUsername(req, res);
         }
     }
@@ -183,6 +191,7 @@ module.exports = function (app, model) {
                             res.send('0');
                         }
                     }
+
                 }
             );
     }
@@ -286,4 +295,5 @@ module.exports = function (app, model) {
     function cloneObject(object) {
         return JSON.parse(JSON.stringify(object));
     }
+
 };

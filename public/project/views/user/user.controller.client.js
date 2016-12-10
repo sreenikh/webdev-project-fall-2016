@@ -100,6 +100,7 @@
     function ProfileController($routeParams, $location, UserService) {
         var vm = this;
         vm.enlistBookshelves = enlistBookshelves;
+        vm.enlistFriends = enlistFriends;
         vm.saveProfile = saveProfile;
         vm.navigateToProfile = navigateToProfile;
         vm.unregisterUser = unregisterUser;
@@ -123,6 +124,12 @@
         function enlistBookshelves(user) {
             if (null !== user) {
                 $location.url("/user/" + user._id + "/bookshelf");
+            }
+        }
+
+        function enlistFriends(user) {
+            if (null !== user) {
+                $location.url("/user/" + user._id + "/friends");
             }
         }
 

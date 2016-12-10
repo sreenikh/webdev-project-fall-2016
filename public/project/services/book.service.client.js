@@ -13,7 +13,8 @@
             searchForBooks: searchForBooks,
             findBookInfo: findBookInfo,
             deleteBook: deleteBook,
-            moveToBookshelf: moveToBookshelf
+            moveToBookshelf: moveToBookshelf,
+            getSampleBooks:getSampleBooks
         };
         return api;
 
@@ -54,6 +55,10 @@
         function moveToBookshelf(bookId, bookshelfWithNewType) {
             var url = '/api/book/movetobookshelf/' + bookId;
             return $http.put(url, bookshelfWithNewType);
+        }
+        function getSampleBooks() {
+            var url = "https://www.googleapis.com/books/v1/volumes?q=%22%20%22&orderBy=newest";
+            return $http.get(url);
         }
     }
 })();

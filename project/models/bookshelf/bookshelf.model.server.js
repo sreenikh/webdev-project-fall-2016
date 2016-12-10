@@ -1,5 +1,5 @@
 module.exports = function () {
-    "use strict";
+    //"use strict";
 
     var mongoose = require("mongoose");
     var BookshelfSchema = require("./bookshelf.schema.server.js")();

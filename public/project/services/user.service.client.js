@@ -34,7 +34,7 @@
         }
 
         function checkLogin() {
-            var url = '/api/checkLogin';
+            var url = '/api/v';
             return $http.post(url);
         }
 
@@ -67,5 +67,6 @@
             var url = '/api/logout';
             return $http.post(url);
         }
+
     }
 })();

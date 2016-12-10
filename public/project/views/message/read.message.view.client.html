@@ -1,0 +1,83 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-text pull-left">
+            <a href="#/user/" class="navbar-link">
+                  <span class="glyphicon glyphicon-chevron-left">
+                  </span>
+            </a>
+        </div>
+        <div class="navbar-header pull-left">
+            <a class="navbar-brand" href="">
+                Messages
+            </a>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+
+    <div ng-show="model.info" class="alert alert-info">
+        {{model.info}}
+    </div>
+
+    <div ng-show="model.error" class="alert alert-danger">
+        {{model.error}}
+    </div>
+
+    <div class="panel panel-default">
+        <H4 class=text-center> Messages </H4>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table borderless table-striped">
+                    <thead>
+                    <tr class="theadrow">
+                        <th class="nowrap">
+                            From
+                        </th>
+                        <th class="nowrap">
+                            Subject
+                        </th>
+                        <th class="nowrap">
+                            Content
+                        </th>
+                        <th class="nowrap">
+                            When
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="message in model.messages">
+                        <td><a href="#/user/{{message.fromId}}">{{message.from}}</a></td>
+                        <td>{{message.subject}}</td>
+                        <td>{{message.message}}</td>
+                            <td><span ng-bind="message.timestamp | date:'EEE, MMM-dd yyyy'"></span></td>
+                        <td>
+                            <a href="" ng-click="model.deleteMessage(message._id)">
+                                <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container-fluid">
+            <div class="navbar-text pull-left">
+                <a href=""
+                   class="brand-logo">PlaceConnect</a>
+            </div>
+            <p class="navbar-text pull-right">
+                <a href="#/user">
+                    <span class="glyphicon glyphicon-user"></span>
+                </a>
+            </p>
+        </div>
+    </nav>
