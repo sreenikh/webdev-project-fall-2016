@@ -94,7 +94,7 @@
         }
 
         function moveToBookshelf(bookshelfType) {
-            var bookshelfWithNewType = vm.bookshelf
+            var bookshelfWithNewType = vm.bookshelf;
             bookshelfWithNewType.type = bookshelfType;
             BookService
                 .moveToBookshelf(bookId, bookshelfWithNewType)

@@ -1,0 +1,97 @@
+<div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="row">
+            <div class="container-fluid bg-primary">
+                <div class="col-md-4">
+                    <p class="navbar-text pull-left">
+                        <a ng-click="model.navigateToProfile()"
+                           class="pointer">
+                            <span class="glyphicon glyphicon-menu-left header-color-white"></span>
+                        </a>
+                    </p>
+                    <a class="navbar-brand"><b class="header-color-white">Friends</b></a>
+                </div>
+                <div class="col-md-offset-4 col-md-4">
+                    <p class="navbar-text pull-right">
+                        <a ng-click="model.navigateToSearchFriends()"
+                           class="pointer">
+                            <span class="glyphicon glyphicon-search header-color-white"></span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid profile-body">
+        <div class="input-group">
+            <input ng-model="model.searchText" type="text" class="form-control">
+            <span class="input-group-btn">
+                <a ng-click="model.searchForFriends(model.searchText)"
+                   class="btn btn-info"
+                   type="button">
+                    <span class="glyphicon glyphicon-search"></span>
+                </a>
+            </span>
+        </div>
+        <br>
+        <div>
+            <div ng-repeat="user in model.searchResults">
+                <div class="row">
+                    <div class="col-xs-10">{{user.username}}: {{user.firstName}} {{user.lastName}}</div>
+                    <div class="col-xs-2">
+                        <button ng-click="model.addFriend(user)"
+                                class="btn btn-primary pull-right">Add</button>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+
+        <br>
+        <a class="btn btn-primary btn-block"
+           href="#/user/{{model.user._id}}/messages">My Messages</a>
+
+        <div class="container-fluid zero-right-padding">
+            <ul class="container-fluid list-group profile-body">
+                <li ng-repeat="friend in model.friends"
+                    class="list-group-item no-border zero-left-padding zero-right-padding">
+                    <!--<a ng-click="model.enlistFriends()"
+                       class="pointer">
+                        {{friend.firstname}}
+                    </a>-->
+                    <div class="row">
+                        <div class="col-xs-6">{{friend.username}}: {{friend.firstName}} {{friend.lastName}}</div>
+                        <div class="col-xs-5">
+                            <button ng-click="model.navigateToMessageFriend(user)"
+                                    class="btn btn-warning">Message</button>
+                        </div>
+                        <div class="col-xs-1">
+                            <button ng-click="model.removeFriend(user)"
+                                    class="btn btn-danger btn-xs pull-right">Remove</button>
+                        </div>
+                    </div>
+                    <br>
+                    <!--<a ng-click="model.navigateToEditWebsite(bookshelf)"-->
+                       <!--class="pointer pull-right">-->
+                        <!--<span class="glyphicon glyphicon-cog"></span>-->
+                    <!--</a>-->
+                    <br>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container-fluid navbar-footer bg-primary">
+            <div class="row navbar-text navbar-right">
+                <div class="col-xs-12 container text-center">
+                    <a ng-click="model.navigateToProfile()"
+                       class="pointer">
+                        <span class="glyphicon glyphicon-user footer-color-white pull-right"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
