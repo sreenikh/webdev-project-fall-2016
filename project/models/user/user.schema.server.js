@@ -13,7 +13,8 @@ module.exports = function () {
         phone: String,
         bookshelves: [{type: mongoose.Schema.Types.ObjectId, ref: 'BookshelfModel'}],
         // reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'ReviewModel'}],
-        dateCreated: {type: Date, default: Date.now}
+        dateCreated: {type: Date, default: Date.now},
+        role: {type: String, enum:["ADMIN", "READER"], default: "READER"}
     }, {collection: "project.user"});
     return UserSchema;
 };

@@ -1,7 +1,7 @@
 module.exports = function () {
 
     var mongoose = require('mongoose');
-    var ReviewSchema = require("./review.schema.server")();
+    var ReviewSchema = require("./review.schema.server.js")();
     var ReviewModel = mongoose.model("ReviewModel", ReviewSchema);
 
     var api = {
@@ -9,6 +9,7 @@ module.exports = function () {
         editReview: editReview,
         deleteReview: deleteReview,
         getReviewsByBookId: getReviewsByBookId,
+        getReviewsByGoogleBookId: getReviewsByGoogleBookId,
         setModel:setModel
     };
     return api;
@@ -18,18 +19,22 @@ module.exports = function () {
     }
 
 
-    function getReviewsByBookId(bId) {
-        return ReviewModel.find({_book: bId});
+    function getReviewsByBookId(bid) {
+        return ReviewModel.find({_book: bid});
     }
 
-    function editReview(reviewId, review_text) {
+    function getReviewsByGoogleBookId(bid) {
+        return ReviewModel.find({googleBookId: bid});
+    }
+
+    function editReview(reviewid, review_text) {
         return ReviewModel.update(
-            {_id: reviewId}, {review: review_text}
+            {_id: reviewid}, {review: review_text}
         );
     }
 
-    function deleteReview(reviewId) {
-        return ReviewModel.remove({_id: reviewId});
+    function deleteReview(reviewid) {
+        return ReviewModel.remove({_id: reviewid});
     }
     function setModel(_model) {
         model = _model;

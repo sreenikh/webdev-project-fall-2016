@@ -4,6 +4,7 @@ module.exports = function (app, model) {
     app.post('/api/bookshelf/:bookshelfId/book', createBook);
     app.get('/api/bookshelf/:bookshelfId/book', findAllBooksForBookshelf);
     app.get('/api/book/:bookId', findBookById);
+    app.get('/api/book/google/:gbid', findBookByGoogleBookId);
     app.put('/api/book/:bookId', updateBook);
     app.put('/api/book/movetobookshelf/:bookId', moveToBookshelf);
     app.delete('/api/book/:bookId', deleteBook);
@@ -58,6 +59,20 @@ module.exports = function (app, model) {
         model
             .bookModel
             .findBookById(bookId)
+            .then(
+                function (book) {
+                    res.json(book);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            );
+    }
+    function findBookByGoogleBookId(req, res) {
+        var gbid = req.params.gbid;
+        model
+            .bookModel
+            .findBookByGoogleBookId(gbid)
             .then(
                 function (book) {
                     res.json(book);

@@ -29,6 +29,7 @@
                 .error(function (error) {
                 });
         }
+
         init();
 
         function navigateToBookDetails(book) {
@@ -41,16 +42,19 @@
         }
     }
 
-    function BookController($routeParams, $location, BookshelfService, BookService) {
+    function BookController($routeParams, $location, BookshelfService, BookService, UserService,ReviewService) {
         var vm = this;
 
         var userId = $routeParams['uid'];
         var bookshelfId = $routeParams['bsid'];
         var bookId = $routeParams['bid'];
 
+        var username = ""
+
         vm.checkBookshelf = checkBookshelf;
         vm.deleteBook = deleteBook;
         vm.moveToBookshelf = moveToBookshelf;
+        vm.createReview = createReview;
         var bookshelvesForUser = [];
 
         function init() {
@@ -76,7 +80,24 @@
                 })
                 .error(function (error) {
                 });
+            UserService
+                .findUserById(userId)
+                .success(function (user) {
+                    vm.user = user;
+                })
+                .error(function (error) {
+                    console.log(error);
+                });
+            BookService
+                .findReviewsByBookId(bookId)
+                .success(function (reviews_list) {
+                    vm.reviews = reviews_list;
+                })
+                .error(function (error) {
+                    console.log(error);
+                });
         }
+
         init();
 
         function checkBookshelf(bookshelfType) {
@@ -104,6 +125,16 @@
                 .error(function (error) {
                 });
 
+        }
+        function createReview(review) {
+            console.log("In the function");
+            ReviewService
+                .createReview(review,vm.user, vm.book )
+                .success(function () {
+                    console.log("Created review");
+                })
+                .error(function (error) {
+                })
         }
     }
 
@@ -140,13 +171,21 @@
         }
     }
 
-    function BookInfoController($routeParams, $location, BookshelfService, BookService) {
+    function BookInfoController($routeParams, $location, BookshelfService, BookService, UserService, ReviewService) {
         var vm = this;
         var googleBookId = $routeParams.googleBookId;
         vm.addToBookshelf = addToBookshelf;
-
+        vm.createReview = createReview;
         var userId = $routeParams['uid'];
         var bookshelvesForUser = [];
+        vm.book = BookService
+            .findBookInfo(googleBookId)
+            .success(function (info) {
+                vm.book = info;
+                console.log(info);
+            })
+            .error(function (error) {
+            });
 
         function init() {
             BookService
@@ -164,7 +203,24 @@
                 })
                 .error(function (error) {
                 });
+            UserService
+                .findUserById(userId)
+                .success(function (user) {
+                    vm.user = user;
+                })
+                .error(function (error) {
+                    console.log(error);
+                });
+            BookService
+                .findReviewsByGoogleBookId(googleBookId)
+                .success(function (reviews_list) {
+                    vm.reviews = reviews_list;
+                })
+                .error(function (error) {
+                    console.log(error);
+                });
         }
+
         init();
 
         function addToBookshelf(bookshelfType) {
@@ -188,6 +244,17 @@
                         })
                 }
             }
+        }
+
+        function createReview(review) {
+            console.log("In the function");
+            ReviewService
+                .createReview(review,vm.user, vm.book )
+                .success(function () {
+                    console.log("Created review");
+                })
+                .error(function (error) {
+                })
         }
     }
 })();

@@ -5,6 +5,7 @@ module.exports = function () {
     var ReviewSchema = mongoose.Schema({
         _user : {type: mongoose.Schema.Types.ObjectId, ref:'UserModel'},
         _book: {type: mongoose.Schema.Types.ObjectId, ref:'BookModel'},
+        googleBookId: String,
         title: String,
         firstName: String,
         lastName: String,

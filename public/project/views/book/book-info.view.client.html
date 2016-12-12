@@ -19,25 +19,79 @@
                 <button type="button" ng-click="model.addToBookshelf('READ')" class="btn btn-warning">Add to "Previously Read"</button>
                 <button type="button" ng-click="model.addToBookshelf('TO_READ')" class="btn btn-primary">Add to "To Be Read"</button>
             </div>
-            <br>
-            {{model.book.id}}
-            <br>
-            {{model.book.volumeInfo.title}}
-            <br>
-            {{model.book.volumeInfo.subtitle}}
-            <br>
-            {{model.book.volumeInfo.authors}}
-            <br>
-            <p>___________________________________________________________________________</p>
-            <br>
-            {{model.book.volumeInfo.title}}
-            <br>
-            {{model.book.id}}
-            <br>
-            {{model.book.volumeInfo.imageLinks.smallThumbnail}}
-            <br>
-            {{model.book.volumeInfo.imageLinks.thumbnail}}
+            <!--<br>-->
+            <!--{{model.book.id}}-->
+            <!--<br>-->
+            <!--{{model.book.volumeInfo.title}}-->
+            <!--<br>-->
+            <!--{{model.book.volumeInfo.subtitle}}-->
+            <!--<br>-->
+            <!--{{model.book.volumeInfo.authors}}-->
+            <!--<br>-->
+            <!--<p>___________________________________________________________________________</p>-->
+            <!--<br>-->
+            <!--{{model.book.volumeInfo.title}}-->
+            <!--<br>-->
+            <!--{{model.book.id}}-->
+            <!--<br>-->
+            <!--{{model.book.volumeInfo.imageLinks.smallThumbnail}}-->
+            <!--<br>-->
+            <!--{{model.book.volumeInfo.imageLinks.thumbnail}}-->
         </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <img ng-src="{{model.book.volumeInfo.imageLinks.thumbnail}}" class="book-detail-poster">
+                </div>
+            <div>
+            <tr>
+                <th>Author</th>
+                <td>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="author in model.book.volumeInfo.authors">
+                            {{author}}
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Publisher</th>
+                <td>{{model.book.volumeInfo.publisher}}</td>
+            </tr>
+            <tr>
+                <th>Published date</th>
+                <td>{{model.book.volumeInfo.publishedDate}}</td>
+            </tr>
+            <tr ng-show="model.book.volumeInfo.description">
+                <th>Description</th>
+                <td><div ng-bind-html="model.checkSafeHtml(model.book.volumeInfo.description)">
+                </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Average rating</th>
+                <td>{{model.book.volumeInfo.averageRating}}</td>
+            </tr>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="yourReview">Add Your Review:</label>
+        <textarea class="form-control" rows="5" id="yourReview"ng-model="model.review"></textarea>
+        <a ng-click="model.createReview(model.review)" class="btn btn-block btn-primary">Submit</a>
+        <a ng-show="model.enableEdit" ng-click="model.editReview(model.reviewId, model.review)" class="btn btn-block btn-info">Edit this review</a>
+    </div>
+    <div>
+    <ul class="list-group">
+        <li ng-repeat="review in model.reviews" class="list-group-item book-individual-review">
+            <a ng-click="model.deleteReview(review)" class="pull-right"><i class="fa fa-trash" aria-hidden="true"></i></i></a>
+            <p class="list-group-item-heading reviewer">Reviewer: {{review.firstName}} {{review.lastName}}</p>
+            <p class="list-group-item-text">{{review.review}}</p>
+        </li>
+    </ul>
+    </div>
+    <div ng-show="model.reviewError" class="alert alert-danger add-to-book-shelf" role="alert">
+        {{model.reviewError}}
     </div>
 
     <nav class="navbar navbar-default navbar-fixed-bottom">

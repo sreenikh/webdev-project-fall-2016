@@ -158,3 +158,19 @@ body {
     left: 33.3333333%;
     z-index: -1;
 }
+
+#taglist {
+    display: inline;
+    list-style: none;
+}
+
+#taglist li {
+    display: inline;
+}
+
+#taglist li + li:before {
+    content: ", ";
+}
+
+.foo { vertical-align: top; list-style-image: url(.foo.png...); }
+.star { vertical-align: top; list-style-image: url(..star.png..); }

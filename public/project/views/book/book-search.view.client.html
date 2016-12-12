@@ -26,17 +26,23 @@
             </div>
             <br>
             <div class="row">
-                <div ng-repeat="book in model.books"
-                     ng-click="model.navigateToBookView(book)">
-                    {{book.id}}
-                    <br>
-                    {{book.volumeInfo.title}}
-                    <br>
-                    {{book.volumeInfo.subtitle}}
-                    <br>
-                    {{book.volumeInfo.authors}}
-                    <br>
-                    <p>____________________________________________________________________________</p>
+                <div ng-repeat="book in model.books" ng-click="model.navigateToBookView(book)">
+                    <div class="row">
+                        <div class="col-sm-6">
+                        <img class="foo center-block" ng-src="{{book.volumeInfo.imageLinks.thumbnail}}" class="book-detail-poster">
+                         </div>
+                        <div>
+                        <h4 class="star list-group-item-heading float-right">{{book.volumeInfo.title}}</h4>
+                        <ul class="list-unstyled ">
+                            <li class="inline"  ng-repeat="author in book.volumeInfo.authors">
+                                {{author}}
+                            </li>
+                        </ul>
+                        <p class="list-group-item-text">{{book.volumeInfo.subtitle}}</p>
+
+                        </div>
+
+                    </div>
                     <br>
                 </div>
             </div>
