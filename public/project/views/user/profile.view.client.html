@@ -45,8 +45,10 @@
             </div>
         </form>
 
-        <a href="#/user/{{model.user._id}}/friends"
+        <a ng-click="model.navigateToListOfFriends(model.user)"
            class="btn btn-primary btn-block">Friends</a>
+        <a ng-click="model.navigateToMessages(model.user)"
+           class="btn btn-info btn-block">Messages</a>
 
         <a ng-click="model.enlistBookshelves(model.user)"
            class="btn btn-primary btn-block">Bookshelves</a>

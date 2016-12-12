@@ -25,7 +25,7 @@
 
     <div class="container-fluid profile-body">
         <div class="input-group">
-            <input ng-model="model.searchText" type="text" class="form-control">
+            <input id="searchText" ng-model="model.searchText" type="text" class="form-control">
             <span class="input-group-btn">
                 <a ng-click="model.searchForFriends(model.searchText)"
                    class="btn btn-info"
@@ -63,7 +63,7 @@
                     <div class="row">
                         <div class="col-xs-6">{{friend.username}}: {{friend.firstName}} {{friend.lastName}}</div>
                         <div class="col-xs-5">
-                            <button ng-click="model.navigateToMessageFriend(user)"
+                            <button ng-click="model.navigateToMessageFriend(friend)"
                                     class="btn btn-warning">Message</button>
                         </div>
                         <div class="col-xs-1">

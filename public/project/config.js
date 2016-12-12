@@ -24,18 +24,33 @@
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
                 controllerAs: "model",
-                //resolve: {
-                //    checkLogin: checkLogin
-                //}
+                resolve: {
+                   checkLogin: checkLogin
+                }
             })
             .when("/user/:uid/bookshelf", {
                 templateUrl: "views/bookshelf/bookshelf-list.view.client.html",
                 controller: "BookshelfListController",
                 controllerAs: "model"
             })
-            .when("/user/:uid/friends", {
-                templateUrl: "views/friends/friends.list.view.client.html",
+            .when("/user/:uid/friend", {
+                templateUrl: "views/friend/friend-list.view.client.html",
                 controller: "FriendsListController",
+                controllerAs: "model"
+            })
+            /*.when("/user/:uid/friend/:fid", {
+                templateUrl: "views/friend/friendlist.view.client.html",
+                controller: "FriendsListController",
+                controllerAs: "model"
+            })*/
+            .when("/user/:uid/message", {
+                templateUrl: "views/message/message-list.view.client.html",
+                controller: "MessageListController",
+                controllerAs: "model"
+            })
+            .when("/user/:uid/message/:fid", {
+                templateUrl: "views/message/message-chat.view.client.html",
+                controller: "MessageChatController",
                 controllerAs: "model"
             })
             .when("/user/:uid/bookshelf/:bsid/book", {

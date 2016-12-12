@@ -9,13 +9,14 @@
         var vm = this;
         vm.navigateToProfile = navigateToProfile;
         vm.searchForFriends = searchForFriends;
+        vm.navigateToMessageFriend = navigateToMessageFriend;
         vm.addFriend = addFriend;
         vm.removeFriend = removeFriend;
         vm.enlistFriends = enlistFriends;
 
         var userId = $routeParams['uid'];
 
-        vm.friends = []
+        vm.friends = [];
         vm.searchResults = [];
 
         function init() {
@@ -51,12 +52,18 @@
             }
         }
 
+        function navigateToMessageFriend(friend) {
+            $location.url("/user/" + userId + "/message/" + friend._id);
+        }
+
         function addFriend(newUser) {
             if (userId !== newUser) {
                 UserService
                     .addFriend(userId, newUser)
                     .success(function (response) {
-                        $location.url("/user/" + userId + "/friend")
+                        document.getElementById("searchText").value = "";
+                        vm.searchResults = [];
+                        init();
                     })
                     .error(function (error) {
                     });

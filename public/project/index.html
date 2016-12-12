@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="BookReviewApp">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
-
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-
 
     <title>Read together</title>
 
@@ -24,17 +25,18 @@
     <script src="views/bookshelf/bookshelf.contoller.client.js"></script>
     <script src="views/book/book.controller.client.js"></script>
     <script src="views/home/home.controller.client.js"></script>
+    <script src="views/friend/friend.controller.client.js"></script>
+    <script src="views/message/message.controller.client.js"></script>
     <script src="services/user.service.client.js"></script>
     <script src="services/bookshelf.service.client.js"></script>
     <script src="services/book.service.client.js"></script>
     <script src="services/review.service.client.js"></script>
-
+    <script src="services/message.service.client.js"></script>
 </head>
+
 <body>
-<div class="container">
-
-    <div ng-view></div>
-</div>
-
+    <div class="container">
+        <div ng-view></div>
+    </div>
 </body>
 </html>

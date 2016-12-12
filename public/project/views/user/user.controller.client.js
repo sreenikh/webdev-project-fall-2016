@@ -103,6 +103,8 @@
         vm.enlistFriends = enlistFriends;
         vm.saveProfile = saveProfile;
         vm.navigateToProfile = navigateToProfile;
+        vm.navigateToListOfFriends = navigateToListOfFriends;
+        vm.navigateToMessages = navigateToMessages;
         vm.unregisterUser = unregisterUser;
         vm.logout = logout;
 
@@ -122,6 +124,7 @@
         init();
 
         function enlistBookshelves(user) {
+            console.log(user);
             if (null !== user) {
                 $location.url("/user/" + user._id + "/bookshelf");
             }
@@ -129,7 +132,7 @@
 
         function enlistFriends(user) {
             if (null !== user) {
-                $location.url("/user/" + user._id + "/friends");
+                $location.url("/user/" + user._id + "/friend");
             }
         }
 
@@ -157,6 +160,14 @@
 
         function navigateToProfile() {
             $location.url("/user/" + userId);
+        }
+
+        function navigateToListOfFriends(user) {
+            $location.url("/user/" + userId + "/friend");
+        }
+
+        function navigateToMessages(user) {
+            $location.url("/user/" + userId + "/message");
         }
 
         function unregisterUser(user) {

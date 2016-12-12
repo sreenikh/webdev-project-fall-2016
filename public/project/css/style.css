@@ -123,6 +123,10 @@ body {
     height: 100%;
 }
 
+.bold {
+    font-weight: bold
+}
+
 /*.vr {
     display: block;
     width:10px;

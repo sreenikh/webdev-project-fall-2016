@@ -1,27 +1,67 @@
 module.exports = function() {
     var mongoose = require('mongoose');
     var MessageSchema = require("./message.schema.server.js")();
-    var Message = mongoose.model("Message", MessageSchema);
+    var MessageModel = mongoose.model("MessageModel", MessageSchema);
+
+    var model = {};
 
     var api = {
         createMessage: createMessage,
-        getMessages: getMessages,
-        deleteMessage: deleteMessage
+        getMessagesFromOneUserToAnotherUser: getMessagesFromOneUserToAnotherUser,
+        getAllMessagesForUser: getAllMessagesForUser,
+        setMessageStatusAsRead: setMessageStatusAsRead,
+        deleteMessage: deleteMessage,
+        setModel: setModel
     };
-
     return api;
 
     function createMessage(message) {
-        return Message.create(message);
+        return MessageModel.create(message);
     }
 
     function deleteMessage(messageId) {
-        return Message.remove({_id : messageId});
+        return MessageModel.remove({_id : messageId});
     }
 
-    function getMessages(fromId, toId){
-        return Message.find({$or: [{fromId: fromId, toId: toId}, {fromId: toId, toId: fromId}]})
+    function getMessagesFromOneUserToAnotherUser(fromId, toId){
+        return MessageModel
+            .find({
+                $or: [
+                    {fromId: fromId, toId: toId},
+                    {fromId: toId, toId: fromId}
+                ]
+            })
+            .sort({
+                dateCreated: -1
+            });
+    }
 
-        //return Message.find({toId: toId});
+    function getAllMessagesForUser(userId) {
+        return MessageModel
+            .find({
+                $or: [
+                    {fromId: userId},
+                    {toId: userId}
+                ]
+            })
+            .sort({
+                toStatus: -1,
+                dateCreated: -1
+            });
+    }
+
+    function setMessageStatusAsRead(messageId) {
+        return MessageModel
+            .findById(messageId)
+            .then(
+                function (message) {
+                    message.toStatus = 'READ';
+                    return message.save();
+                }
+            );
+    }
+
+    function setModel(_model) {
+        model = _model;
     }
 };

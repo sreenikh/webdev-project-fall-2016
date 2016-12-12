@@ -10,9 +10,15 @@ module.exports = function () {
     var api = {
         createUser: createUser,
         findUserById: findUserById,
+        bulkFindUsersByIds: bulkFindUsersByIds,
         findUserByUsername: findUserByUsername,
         findUserByCredentials: findUserByCredentials,
+        findAllMatchingNames: findAllMatchingNames,
         findBookshelfObjectIdsForUser: findBookshelfObjectIdsForUser,
+        findFriendObjectIdsForUser: findFriendObjectIdsForUser,
+        findFriendsForUser: findFriendsForUser,
+        addFriend: addFriend,
+        removeFriend: removeFriend,
         updateUser: updateUser,
         deleteUser: deleteUser,
         setModel: setModel
@@ -27,8 +33,46 @@ module.exports = function () {
         return UserModel.findById(userId);
     }
 
+    function bulkFindUsersByIds(listOfUserIds) {
+        return UserModel
+            .find()
+            .then(
+                function (unwantedList) {
+                    var count = 0;
+                    var listOfUsers = [];
+
+                    return recursiveFormationOfList(count, listOfUserIds, listOfUsers);
+
+                    function recursiveFormationOfList(currentCount, inputListOfUserIds, userAccumulator) {
+                        if (currentCount === inputListOfUserIds.length) {
+                            return userAccumulator;
+                        } else {
+                            return UserModel
+                                .findById(inputListOfUserIds[currentCount])
+                                .then(
+                                    function (user) {
+                                        userAccumulator.push(user);
+                                        return recursiveFormationOfList(currentCount + 1, inputListOfUserIds, userAccumulator);
+                                    },
+                                    function (error) {
+                                        return error;
+                                    }
+                                );
+                        }
+                    }
+                }
+            );
+    }
+
     function findUserByUsername(username) {
         return UserModel.find({username: username});
+    }
+
+    function findAllMatchingNames(name) {
+        var searchJson = {$or: [{username: {'$regex': name, $options:'i'}},
+                                {firstName: {'$regex': name, $options:'i'}},
+                                {lastName: {'$regex': name, $options:'i'}}]};
+        return UserModel.find(searchJson);
     }
 
     function findUserByCredentials(username, password) {
@@ -43,6 +87,53 @@ module.exports = function () {
                     return user.bookshelves;
                 }
             );
+    }
+
+    function findFriendObjectIdsForUser(userId) {
+        return UserModel
+            .findById(userId)
+            .then(
+                function (user) {
+                    return user.friends;
+                }
+            );
+    }
+
+    function findFriendsForUser(userId) {
+        return model
+            .userModel
+            .findFriendObjectIdsForUser(userId)
+            .then(
+                function (listOfFriendObjectIds) {
+                    return UserModel
+                        .find({_id: {$in: listOfFriendObjectIds}});
+                },
+                function (error) {
+                }
+            );
+    }
+
+    function addFriend(existingUserId, newUserId) {
+        return UserModel
+            .findById(existingUserId)
+            .then(
+                function (existingUser) {
+                    existingUser.friends.push(newUserId);
+                    return existingUser.save();
+                }
+            )
+    }
+
+    function removeFriend(existingUserId, newUserId) {
+        return UserModel
+            .findById(existingUserId)
+            .then(
+                function (existingUser) {
+                    const index = existingUser.friends.indexOf(newUserId);
+                    existingUser.friends.splice(index, 1);
+                    return existingUser.save();
+                }
+            )
     }
 
     function updateUser(userId, user) {

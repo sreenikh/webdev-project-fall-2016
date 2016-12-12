@@ -14,7 +14,8 @@ module.exports = function () {
         bookshelves: [{type: mongoose.Schema.Types.ObjectId, ref: 'BookshelfModel'}],
         // reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'ReviewModel'}],
         dateCreated: {type: Date, default: Date.now},
-        role: {type: String, enum:["ADMIN", "READER"], default: "READER"}
+        role: {type: String, enum:["ADMIN", "READER"], default: "READER"},
+        friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'UserModel'}]
     }, {collection: "project.user"});
     return UserSchema;
 };
