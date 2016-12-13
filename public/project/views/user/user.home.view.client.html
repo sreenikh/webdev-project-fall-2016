@@ -1,49 +1,50 @@
-<nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="row">
+        <div class="container-fluid">
+            <div class="col-md-4">
+                <p class="navbar-text pull-left">
+                    <a ng-click="model.navigateToProfile()"
+                       class="pointer">
+                        <span class="glyphicon glyphicon-menu-left "></span>
+                    </a>
+                </p>
 
-            <a class="navbar-text"><b> Hello {{model.user.firstName}} {{model.user.lastName}}! </b></a>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <span class="glyphicon glyphicon-user pull-right glyph"></span>
-                <span class="glyphicon glyphicon-user pull-right glyph"></span>
-            </ul>
-
-        </div><!-- /.navbar-collapse --></div>
-    </div><!-- /.container-fluid -->
+                    <a ng-click="model.navigateToProfile()"
+                       class="navbar-text"><b class="">Hello {{model.user.firstName}} {{model.user.lastName}}!</b></a>
+            </div>
+            <div class="col-md-offset-4 col-md-4">
+                <div class="navbar-text pull-right">
+                    <ul id="mylist" class="list-inline">
+                        <li id="item1" ng-click="model.navigateToListOfFriends(model.user)" class="list-inline-item">
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                        </li>
+                        <li id="item2" ng-click="model.navigateToMessages(model.user)" class="list-inline-item">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </nav>
 
-
-<!--<nav class="navbar navbar-default navbar-fixed-top">-->
-        <!--<div class="row">-->
-            <!--<div class="container-fluid">-->
-                <!--<div class="col-md-4">-->
-                    <!--<a class="navbar-text"><b> Hello {{model.user.firstName}} {{model.user.lastName}}! </b></a>-->
-                <!--</div>-->
-                <!--<span class="glyphicon glyphicon-user pull-right glyph"></span>-->
-                <!--<button ng-click="model.logout()"-->
-                        <!--type="submit" class="btn btn-default">Logout</button>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</nav>-->
-
-
 <div class="container-fluid">
-        <h1>Hello </h1>
-
-        <a ng-click="model.navigateToListOfFriends(model.user)"
-           class="btn btn-primary btn-block">Friends</a>
-        <a ng-click="model.navigateToMessages(model.user)"
-           class="btn btn-info btn-block">Messages</a>
-
-        <a ng-click="model.enlistBookshelves(model.user)"
-           class="btn btn-primary btn-block">Bookshelves</a>
-
-        <a ng-click="model.unregisterUser(model.user)"
-           class="btn btn-warning btn-block">Unregister</a>
+        <br>
+    <br>
+        <p>Add books to your bookshelves, and keep track of your reading.</p>
+        <p>Looking for some inspiration? Check out Bill Gates' <a href="https://www.gatesnotes.com/Books#All">fabulous blog on reading.</a> </p>
+    <!--<a ng-click="model.enlistBookshelves(model.user)"-->
+           <!--class="btn btn-primary btn-block">Bookshelves</a>-->
+    <div class="col-sm-4">
+        <a href="#"
+           class="btn btn-primary btn-block">Want to Read</a> </div>
+    <div class="col-sm-4">
+        <a href="#"
+           class="btn btn-info btn-block">Currently Reading</a>
+    </div>
+    <div class="col-sm-4">
+        <a href="#"
+           class="btn btn-info btn-block">Finished Reading</a>
     </div>
 
     <nav class="navbar navbar-default navbar-fixed-bottom">

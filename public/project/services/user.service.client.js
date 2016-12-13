@@ -39,7 +39,7 @@
         }
 
         function checkLogin() {
-            var url = '/api/v';
+            var url = '/api/checkLogin';
             return $http.post(url);
         }
 
