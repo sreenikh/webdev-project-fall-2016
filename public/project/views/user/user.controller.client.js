@@ -5,7 +5,8 @@
         .module("BookReviewApp")
         .controller("LoginController", LoginController)
         .controller("RegisterController", RegisterController)
-        .controller("ProfileController", ProfileController);
+        .controller("ProfileController", ProfileController)
+        .controller("UserHomeController", UserHomeController);
 
     // vm means view model
     function LoginController($location, UserService) {
@@ -98,6 +99,102 @@
     }
 
     function ProfileController($routeParams, $location, UserService) {
+        var vm = this;
+        vm.enlistBookshelves = enlistBookshelves;
+        vm.enlistFriends = enlistFriends;
+        vm.saveProfile = saveProfile;
+        vm.navigateToProfile = navigateToProfile;
+        vm.navigateToListOfFriends = navigateToListOfFriends;
+        vm.navigateToMessages = navigateToMessages;
+        vm.unregisterUser = unregisterUser;
+        vm.logout = logout;
+
+        var userId = $routeParams.uid;
+
+        function init() {
+            UserService
+                .findUserById(userId)
+                .success(function (user) {
+                    if ('0' !== user) {
+                        vm.user = user;
+                    }
+                })
+                .error(function (error) {
+                });
+        }
+        init();
+
+        function enlistBookshelves(user) {
+            console.log(user);
+            if (null !== user) {
+                $location.url("/user/" + user._id + "/bookshelf");
+            }
+        }
+
+        function enlistFriends(user) {
+            if (null !== user) {
+                $location.url("/user/" + user._id + "/friend");
+            }
+        }
+
+        function saveProfile(user) {
+            if (null === username || "" === username || undefined === username) {
+                vm.usernameError = "Username cannot be empty";
+                return;
+            }
+            UserService
+                .updateUser(userId, user)
+                .success(function (response) {
+                    console.log(response);
+                    if ('0' === response) {
+                        alert("Update failed");
+                    } else if (true === response) {
+                        alert("Update was successful");
+                    } else if (false === response) {
+                        alert("User name exists. Please choose a different one.");
+                        init();
+                    }
+                })
+                .error(function (error) {
+                });
+        }
+
+        function navigateToProfile() {
+            $location.url("/user/" + userId);
+        }
+
+        function navigateToListOfFriends(user) {
+            $location.url("/user/" + userId + "/friend");
+        }
+
+        function navigateToMessages(user) {
+            $location.url("/user/" + userId + "/message");
+        }
+
+        function unregisterUser(user) {
+            UserService
+                .deleteUser(user._id)
+                .success(function (response) {
+                    $location.url("/login");
+                    if (true === response) {
+                        alert("User unregistered");
+                    } else {
+                        alert("User was not unregistered");
+                    }
+                })
+                .error(function (error) {
+                })
+        }
+
+        function logout() {
+            UserService
+                .logout()
+                .success(function () {
+                    $location.url("/login");
+                })
+        }
+    }
+    function UserHomeController($routeParams, $location, UserService) {
         var vm = this;
         vm.enlistBookshelves = enlistBookshelves;
         vm.enlistFriends = enlistFriends;

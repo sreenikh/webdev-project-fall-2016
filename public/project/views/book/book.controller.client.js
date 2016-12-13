@@ -6,7 +6,9 @@
         .controller("BookListController", BookListController)
         .controller("BookController", BookController)
         .controller("BookSearchController", BookSearchController)
-        .controller("BookInfoController", BookInfoController);
+        .controller("PublicBookSearchController", PublicBookSearchController)
+        .controller("BookInfoController", BookInfoController)
+        .controller("PublicBookInfoController", PublicBookInfoController);
 
     function BookListController($routeParams, $location, BookService) {
         var vm = this;
@@ -14,7 +16,6 @@
 
         var userId = $routeParams['uid'];
         var bookshelfId = $routeParams['bsid'];
-
         vm.navigateToBookDetails = navigateToBookDetails;
         vm.navigateToSearchBooks = navigateToSearchBooks;
 
@@ -171,6 +172,39 @@
         }
     }
 
+    function PublicBookSearchController($routeParams, $location, BookService) {
+        var vm = this;
+        vm.navigateToProfile = navigateToProfile;
+        vm.searchForBooks = searchForBooks;
+        vm.navigateToBookView = navigateToBookView;
+
+        vm.books = [];
+
+        //var userId = $routeParams['uid'];
+
+        function navigateToProfile() {
+            $location.url("/user/" + userId);
+        }
+
+        function searchForBooks() {
+            if (undefined !== vm.searchText && null !== vm.searchText && "" !== vm.searchText) {
+                BookService
+                    .searchForBooks(vm.searchText)
+                    .success(function (response) {
+                        if (0 !== response.totalItems) {
+                            console.log(response)
+                            vm.books = response.items
+                        }
+                    })
+
+            }
+        }
+
+        function navigateToBookView(book) {
+            $location.url("/book/info/" + book.id);
+        }
+    }
+
     function BookInfoController($routeParams, $location, BookshelfService, BookService, UserService, ReviewService) {
         var vm = this;
         var googleBookId = $routeParams.googleBookId;
@@ -256,5 +290,39 @@
                 .error(function (error) {
                 })
         }
+    }
+    function PublicBookInfoController($routeParams, $location, BookshelfService, BookService, UserService, ReviewService) {
+        var vm = this;
+        var googleBookId = $routeParams.googleBookId;
+        vm.book = BookService
+            .findBookInfo(googleBookId)
+            .success(function (info) {
+                vm.book = info;
+                console.log(info);
+            })
+            .error(function (error) {
+            });
+
+        function init() {
+            BookService
+                .findBookInfo(googleBookId)
+                .success(function (info) {
+                    vm.book = info;
+                    console.log(info);
+                })
+                .error(function (error) {
+                });
+
+            BookService
+                .findReviewsByGoogleBookId(googleBookId)
+                .success(function (reviews_list) {
+                    vm.reviews = reviews_list;
+                })
+                .error(function (error) {
+                    console.log(error);
+                });
+        }
+
+        init();
     }
 })();

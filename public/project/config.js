@@ -28,6 +28,14 @@
                    checkLogin: checkLogin
                 }
             })
+            .when("/user/:uid/home", {
+                templateUrl: "views/user/user.home.view.client.html",
+                controller: "UserHomeController",
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
+            })
             .when("/user/:uid/bookshelf", {
                 templateUrl: "views/bookshelf/bookshelf-list.view.client.html",
                 controller: "BookshelfListController",
@@ -63,9 +71,19 @@
                 controller: "BookSearchController",
                 controllerAs: "model"
             })
+            .when("/book/search", {
+                templateUrl: "views/book/public-book-search.view.client.html",
+                controller: "PublicBookSearchController",
+                controllerAs: "model"
+            })
             .when("/user/:uid/book/info/:googleBookId", {
                 templateUrl: "views/book/book-info.view.client.html",
                 controller: "BookInfoController",
+                controllerAs: "model"
+            })
+            .when("/book/info/:googleBookId", {
+                templateUrl: "views/book/public-book-info.view.client.html",
+                controller: "PublicBookInfoController",
                 controllerAs: "model"
             })
             .when("/user/:uid/bookshelf/:bsid/book/:bid", {

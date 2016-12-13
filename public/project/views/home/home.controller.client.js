@@ -4,9 +4,11 @@
         .module("BookReviewApp")
         .controller("HomePageController", HomePageController);
 
-    function HomePageController(UserService, BookService, $sce) {
+    function HomePageController(UserService, BookService, $location) {
         var vm = this;
         vm.sampleBooks = {};
+        vm.login = login;
+        vm.navigateToSearchBooks = navigateToSearchBooks;
 
 
         function init() {
@@ -16,8 +18,21 @@
             console.log(vm.sampleBooks)
         }
 
-        return init();
-
+        function login(username, password) {
+            UserService
+                .login(username, password)
+                .success(function (user) {
+                    if ('0' === user) {
+                        vm.error = "Invalid username or password";
+                    } else {
+                        $location.url("/user/" + user._id+"/home");
+                    }
+                })
+                .error(function (e) {
+                    vm.error = "Invalid username or password";
+                    console.log(e);
+                });
+        }
         function getCurrentUser() {
             UserService
                 .getCurrentUser()
@@ -44,5 +59,12 @@
             // Go to book details page
             $location.url("/book/"+bookId);
         }
+
+        function navigateToSearchBooks() {
+            $location.url("/book/search");
+
+        }
+
+        return init();
     }
 })();

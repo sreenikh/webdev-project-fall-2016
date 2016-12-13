@@ -1,42 +1,109 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Read Together</a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li ng-show="model.loggedIn">
-                    <a href="#/user/{{model.currentUser._id}}">{{model.currentUser.firstName}}</a>
-                </li>
-                <li ng-show="model.loggedIn==false">
-                    <a href="#/login">Login/Register</a>
+ <div class="navbar-header zero-top-padding zero-left-padding zero-right-padding">
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand pull-left " href="#">Read Together</a>
+    </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav pull-right">
+                <!--<li class="active"><a href="#">Link</a>-->
+                <!--</li>-->
+
+                <!--<li class="dropdown">-->
+                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>-->
+                    <!--<ul class="dropdown-menu">-->
+                        <!--<li><a href="#">Action</a>-->
+                        <!--</li>-->
+                        <!--<li><a href="#">Another action</a>-->
+                        <!--</li>-->
+                        <!--<li><a href="#">Something else here</a>-->
+                        <!--</li>-->
+                        <!--<li class="divider"></li>-->
+                        <!--<li><a href="#">Separated link</a>-->
+                        <!--</li>-->
+                        <!--<li class="divider"></li>-->
+                        <!--<li><a href="#">One more separated link</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                        <li class="thirdPartyLink">
+                            <a class="fbjsLogin" data-redirect="/" href="/auth/facebook">
+                                <img alt="Sign in with Facebook" title="Sign in with your Facebook account" src="https://s.gr-assets.com/assets/home/homepage_signin_facebook-99e862a1d6c0b1f359c0332006e16e10.png">
+                            </a>
+
+                        <li class="thirdPartyLink">
+                            <a href="/auth/google"><img alt="Sign in with Google" title="Sign in with your Google account" src="https://s.gr-assets.com/assets/home/homepage_signin_google-4b119f254f4e8224b9a35ecb5f4fac55.png"></a>
+                        </li>
+
+
+
+                <li><a href="#/register">Register</a>
                 </li>
             </ul>
+            <li><p class="navbar-text">Already have an account?</p></li>
+            <form class="navbar-form navbar-right" role="search">
+                <div class="form-group">
+                    <input type="text"
+                           ng-model="model.username"
+                           placeholder="username" class="form-control" name="username">
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="model.password" class="form-control" name="password" placeholder="Password">
+                </div>
+                <button ng-click="model.login(model.username, model.password)"
+                        type="submit" class="btn btn-default">Sign In</button>
+            </form>
         </div>
-    </div>
-</nav>
 
-<div class="container main-content-padding">
-    <div class="main-page-heading">
-        <div class="container">
+<!--<nav class="navbar navbar-default navbar-fixed-top" role="navigation">-->
+    <!--<div class="container">-->
+        <!--<div class="navbar-header">-->
+            <!--<button type="button" class="navbar-toggle" data-toggle="collapse"-->
+                    <!--data-target="#bs-example-navbar-collapse-1">-->
+                <!--<span class="sr-only">Toggle navigation</span>-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+            <!--</button>-->
+            <!--<a class="navbar-brand" href="#">Read Together</a>-->
+        <!--</div>-->
+        <!--&lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;-->
+        <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
+            <!--<ul class="nav navbar-nav navbar-right">-->
+                <!--<li ng-show="model.loggedIn">-->
+                    <!--<a href="#/user/{{model.currentUser._id}}">{{model.currentUser.firstName}}</a>-->
+                <!--</li>-->
+                <!--<li ng-show="model.loggedIn==false">-->
+                    <!--<a href="#/login">Login/Register</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</nav>-->
+
+<div class=" main-content-padding">
+    <div class="main-page-heading ">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <div>
                     <h2>Read Together</h2>
                     <h3>Discover your next favorite book, together!</h3>
+                    </div>
                     <hr class="small">
                     <div class="row">
                         <div class="input-group">
-                            <input ng-model="model.searchText" type="text" class="form-control">
+                            <input ng-click="model.navigateToSearchBooks()"
+                                   ng-model="model.searchText" type="text" class="form-control">
                             <span class="input-group-btn">
-                                <a ng-click="model.searchForBooks()"
+
+                                <!--<a  ng-click="model.searchForBooks()"-->
+                                    <!--class="btn btn-info"-->
+                                    <!--type="button">-->
+                                    <!--<span class="glyphicon glyphicon-search"></span>-->
+                                <!--</a>-->
+                                <a ng-click = "model.navigateToSearchBooks()"
                                     class="btn btn-info"
                                     type="button">
                                     <span class="glyphicon glyphicon-search"></span>
@@ -44,20 +111,22 @@
                             </span>
                         </div>
                     </div>
+
+                    <br>
                     <div class="row">
                         <div class="col-sm-4" ng-repeat="book in model.sampleBooks">
                             <div class="portfolio-item">
                                 <a ng-click="model.getBookDetails(book.id)">
                                     <h3>{{book.volumeInfo.title}}</h3>
-                                    <img class="img-portfolio img-responsive"
+                                    <img class="img-portfolio img-responsive center-block"
                                          ng-src="{{book.volumeInfo.imageLinks.thumbnail}}">
                                 </a>
+                                <br>
+                                <br>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
-</div>
 
