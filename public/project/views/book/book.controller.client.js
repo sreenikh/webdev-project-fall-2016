@@ -43,19 +43,21 @@
         }
     }
 
-    function BookController($routeParams, $location, BookshelfService, BookService, UserService,ReviewService) {
+    function BookController($routeParams, $location, $sce, BookshelfService, BookService, UserService, ReviewService) {
         var vm = this;
 
         var userId = $routeParams['uid'];
         var bookshelfId = $routeParams['bsid'];
         var bookId = $routeParams['bid'];
 
-        var username = ""
+        var username = "";
 
         vm.checkBookshelf = checkBookshelf;
         vm.deleteBook = deleteBook;
         vm.moveToBookshelf = moveToBookshelf;
         vm.createReview = createReview;
+        vm.checkSafeHtml = checkSafeHtml;
+
         var bookshelvesForUser = [];
 
         function init() {
@@ -69,7 +71,14 @@
             BookService
                 .findBookById(bookId)
                 .success(function (book) {
-                    vm.book = book;
+                    BookService
+                        .findBookInfo(book.googleBookId)
+                        .success(function (info) {
+                            vm.book = info;
+                            console.log(info);
+                        })
+                        .error(function (error) {
+                        });
                 })
                 .error(function (error) {
                     console.log(error);
@@ -137,6 +146,10 @@
                 .error(function (error) {
                 })
         }
+
+        function checkSafeHtml(html) {
+            return $sce.trustAsHtml(html);
+        }
     }
 
     function BookSearchController($routeParams, $location, BookService) {
@@ -159,7 +172,7 @@
                     .searchForBooks(vm.searchText)
                     .success(function (response) {
                         if (0 !== response.totalItems) {
-                            console.log(response)
+                            console.log(response);
                             vm.books = response.items
                         }
                     })
@@ -205,21 +218,24 @@
         }
     }
 
-    function BookInfoController($routeParams, $location, BookshelfService, BookService, UserService, ReviewService) {
+    function BookInfoController($routeParams, $location, $sce, BookshelfService, BookService, UserService, ReviewService) {
         var vm = this;
         var googleBookId = $routeParams.googleBookId;
-        vm.addToBookshelf = addToBookshelf;
-        vm.createReview = createReview;
         var userId = $routeParams['uid'];
         var bookshelvesForUser = [];
-        vm.book = BookService
+
+        /*vm.book = BookService
             .findBookInfo(googleBookId)
             .success(function (info) {
                 vm.book = info;
                 console.log(info);
             })
             .error(function (error) {
-            });
+            });*/
+
+        vm.addToBookshelf = addToBookshelf;
+        vm.createReview = createReview;
+        vm.checkSafeHtml = checkSafeHtml;
 
         function init() {
             BookService
@@ -263,11 +279,33 @@
                 var bookshelf = bookshelvesForUser[bs];
                 if (bookshelfType === bookshelf.type) {
                     var bookToBeCreated = {
-                        title: vm.book.volumeInfo.title,
-                        googleBookId: vm.book.id,
-                        smallThumbnail: vm.book.volumeInfo.imageLinks.smallThumbnail,
-                        thumbnail: vm.book.volumeInfo.imageLinks.thumbnail
+                        googleBookId: vm.book.id
                     };
+                    if ('volumeInfo' in vm.book) {
+                        if ('title' in vm.book.volumeInfo) {
+                            bookToBeCreated['title'] = vm.book.volumeInfo.title;
+                        }
+                        if ('publishedDate' in vm.book.volumeInfo) {
+                            bookToBeCreated['publishedDate'] = vm.book.volumeInfo.publishedDate;
+                        }
+                        if ('publisher' in vm.book.volumeInfo) {
+                            bookToBeCreated['publisher'] = vm.book.volumeInfo.publisher;
+                        }
+                        if ('averageRating' in vm.book.volumeInfo) {
+                            bookToBeCreated['averageRating'] = vm.book.volumeInfo.averageRating;
+                        }
+                        if ('ratingsCount' in vm.book.volumeInfo) {
+                            bookToBeCreated['ratingsCount'] = vm.book.volumeInfo.ratingsCount;
+                        }
+                        if ('imageLinks' in vm.book.volumeInfo) {
+                            if ('smallThumbnail' in vm.book.volumeInfo.imageLinks) {
+                                bookToBeCreated['smallThumbnail'] = vm.book.volumeInfo.imageLinks.smallThumbnail;
+                            }
+                            if ('thumbnail' in vm.book.volumeInfo.imageLinks) {
+                                bookToBeCreated['thumbnail'] = vm.book.volumeInfo.imageLinks.thumbnail;
+                            }
+                        }
+                    }
                     BookService
                         .createBook(bookshelf._id, bookToBeCreated)
                         .success(function (newBook) {
@@ -275,7 +313,7 @@
                             $location.url("/user/" + userId + "/bookshelf");
                         })
                         .error(function (error) {
-                        })
+                        });
                 }
             }
         }
@@ -289,6 +327,10 @@
                 })
                 .error(function (error) {
                 })
+        }
+
+        function checkSafeHtml(html) {
+            return $sce.trustAsHtml(html);
         }
     }
     function PublicBookInfoController($routeParams, $location, BookshelfService, BookService, UserService, ReviewService) {

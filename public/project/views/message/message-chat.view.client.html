@@ -1,0 +1,72 @@
+<div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="row">
+            <div class="container-fluid bg-primary">
+                <div class="col-md-4">
+                    <p class="navbar-text pull-left">
+                        <a ng-click="model.navigateToProfile()"
+                           class="pointer">
+                            <span class="glyphicon glyphicon-menu-left header-color-white"></span>
+                        </a>
+                    </p>
+                    <a class="navbar-brand"><b class="header-color-white">Chat</b></a>
+                </div>
+                <div class="col-md-offset-4 col-md-4">
+                    <p class="navbar-text pull-right">
+                        <a ng-click="model.navigateToSearchBooks()"
+                           class="pointer">
+                            <span class="glyphicon glyphicon-search header-color-white"></span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid profile-body">
+        <div>
+            <textarea id="messageText" ng-model="model.messageText" type="text" class="form-control"></textarea>
+            <br>
+            <a ng-click="model.sendMessage(model.messageText)"
+               class="btn btn-block btn-info">
+                <span class="fa fa-paper-plane"></span>
+            </a>
+        </div>
+        <div class="container-fluid zero-right-padding">
+            <ul class="container-fluid list-group profile-body">
+                <li ng-repeat="message in model.messages"
+                    ng-class="{'bold': true}"
+                    class="list-group-item no-border zero-left-padding zero-right-padding word-wrap-break-word">
+                    <!--<p ng-class="{'text-right-align': model.userId == message.fromId,
+                                    'text-left-align': model.userId == message.toId,
+                                    'italic': true,
+                                    'three-fourths-width': true}">{{message}}</p>-->
+                    <div ng-class="{'right-align': model.userId == message.fromId, 'left-align': model.userId == message.toId, 'three-fourths-width': true}">
+                        <p ng-class="{'text-right-align': model.userId == message.fromId,
+                                    'text-left-align': model.userId == message.toId,
+                                    'italic': true,
+                                    'bg-success': model.userId == message.fromId,
+                                    'bg-warning': model.userId == message.toId,}">
+                            {{message.message}}
+                            <br/><br/>
+                            {{message.dateCreated}}
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container-fluid navbar-footer bg-primary">
+            <div class="row navbar-text navbar-right">
+                <div class="col-xs-12 container text-center">
+                    <a ng-click="model.navigateToProfile()"
+                       class="pointer">
+                        <span class="glyphicon glyphicon-user footer-color-white pull-right"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>

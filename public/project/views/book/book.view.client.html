@@ -14,14 +14,13 @@
 
     <div class="container-fluid">
         <div class="profile-body">
-            <div class="btn-group block" data-toggle="buttons-radio">
-                <button type="button" ng-hide="model.checkBookshelf('CURRENTLY_READING')" ng-click="model.moveToBookshelf('CURRENTLY_READING')" class="btn btn-success">Move to "Currently Reading"</button>
-                <button type="button" ng-hide="model.checkBookshelf('READ')" ng-click="model.moveToBookshelf('READ')" class="btn btn-warning">Move to "Previously Read"</button>
-                <button type="button" ng-hide="model.checkBookshelf('TO_READ')" ng-click="model.moveToBookshelf('TO_READ')" class="btn btn-primary">Move to "To Be Read"</button>
+            <div class="btn-group btn-block widget-list-element-top-bottom-margin" data-toggle="buttons-radio">
+                <button type="button" ng-hide="model.checkBookshelf('CURRENTLY_READING')" ng-click="model.moveToBookshelf('CURRENTLY_READING')" class="col-xs-6 btn btn-success">Move to "Currently Reading"</button>
+                <button type="button" ng-hide="model.checkBookshelf('READ')" ng-click="model.moveToBookshelf('READ')" class="col-xs-6 btn btn-warning">Move to "Previously Read"</button>
+                <button type="button" ng-hide="model.checkBookshelf('TO_READ')" ng-click="model.moveToBookshelf('TO_READ')" class="col-xs-6 btn btn-primary">Move to "To Be Read"</button>
             </div>
-            <button ng-click="model.deleteBook()" class="btn btn-block btn-danger">Delete Book</button>
-
-            <div class="col-sm-6">
+            <br>
+            <!--<div class="col-sm-6">
                 <img ng-src="{{model.book.thumbnail}}" class="book-detail-poster">
             </div>
 
@@ -32,7 +31,54 @@
             <br>
             <br>
             {{model.book.googleBookId}}
-            <br>
+            <br>-->
+
+            <div class="row widget-list-element-top-bottom-margin">
+                <div class="col-xs-3">
+                    <img ng-src="{{model.book.volumeInfo.imageLinks.thumbnail}}" class="book-detail-poster">
+                </div>
+                <div class="col-xs-9">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td class="col-xs-3">Title:</td>
+                            <td class="col-xs-6">{{model.book.volumeInfo.title}}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-3">Author(s):</td>
+                            <td class="col-xs-6">
+                                <ul class="list-unstyled">
+                                    <li ng-repeat="author in model.book.volumeInfo.authors">
+                                        {{author}}
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-3">Publisher:</td>
+                            <td class="col-xs-6">{{model.book.volumeInfo.publisher}}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-3">Published date:</td>
+                            <td class="col-xs-6">{{model.book.volumeInfo.publishedDate}}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-3">Average Rating:</td>
+                            <td class="col-xs-6">{{model.book.volumeInfo.averageRating}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="container-fluid row">
+                <h4>Brief Description:</h4>
+                <div ng-bind-html="model.checkSafeHtml(model.book.volumeInfo.description)"
+                     class="container-fluid zero-right-padding text-justify"></div>
+                <h4><br/></h4>
+            </div>
+
+            <button ng-click="model.deleteBook()" class="btn btn-block btn-danger">Delete Book from Bookshelf</button>
+
         </div>
         <div class="form-group">
             <label for="yourReview">Add Your Review:</label>
