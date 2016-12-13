@@ -7,88 +7,78 @@
                        class="pointer">
                         <span class="glyphicon glyphicon-menu-left footer-color-black"></span></a>
                 </p>
-                <a class="navbar-brand"><b>Search Books</b></a>
+                <a class="navbar-brand"><b>Book Details</b></a>
             </div>
         </div>
     </nav>
 
     <div class="container-fluid">
         <div class="profile-body">
-            <div class="btn-group btn-block" data-toggle="buttons-radio">
-                <button type="button" ng-click="model.addToBookshelf('CURRENTLY_READING')" class="btn btn-success">Add to "Currently Reading"</button>
-                <button type="button" ng-click="model.addToBookshelf('READ')" class="btn btn-warning">Add to "Previously Read"</button>
-                <button type="button" ng-click="model.addToBookshelf('TO_READ')" class="btn btn-primary">Add to "To Be Read"</button>
+            <div class="btn-group btn-block widget-list-element-top-bottom-margin" data-toggle="buttons-radio">
+                <button type="button" ng-click="model.addToBookshelf('CURRENTLY_READING')" class="col-xs-4 btn btn-success">Add to "Currently Reading"</button>
+                <button type="button" ng-click="model.addToBookshelf('READ')" class="col-xs-4 btn btn-warning">Add to "Previously Read"</button>
+                <button type="button" ng-click="model.addToBookshelf('TO_READ')" class="col-xs-4 btn btn-primary">Add to "To Be Read"</button>
             </div>
-            <!--<br>-->
-            <!--{{model.book.id}}-->
-            <!--<br>-->
-            <!--{{model.book.volumeInfo.title}}-->
-            <!--<br>-->
-            <!--{{model.book.volumeInfo.subtitle}}-->
-            <!--<br>-->
-            <!--{{model.book.volumeInfo.authors}}-->
-            <!--<br>-->
-            <!--<p>___________________________________________________________________________</p>-->
-            <!--<br>-->
-            <!--{{model.book.volumeInfo.title}}-->
-            <!--<br>-->
-            <!--{{model.book.id}}-->
-            <!--<br>-->
-            <!--{{model.book.volumeInfo.imageLinks.smallThumbnail}}-->
-            <!--<br>-->
-            <!--{{model.book.volumeInfo.imageLinks.thumbnail}}-->
+            <div class="row widget-list-element-top-bottom-margin">
+                <div class="col-xs-3">
+                    <img ng-src="{{model.book.volumeInfo.imageLinks.thumbnail}}" class="book-detail-poster">
+                </div>
+                <div class="col-xs-9">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td class="col-xs-3">Title:</td>
+                            <td class="col-xs-6">{{model.book.volumeInfo.title}}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-3">Author(s):</td>
+                            <td class="col-xs-6">
+                                <ul class="list-unstyled">
+                                    <li ng-repeat="author in model.book.volumeInfo.authors">
+                                        {{author}}
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-3">Publisher:</td>
+                            <td class="col-xs-6">{{model.book.volumeInfo.publisher}}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-3">Published date:</td>
+                            <td class="col-xs-6">{{model.book.volumeInfo.publishedDate}}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-3">Average Rating:</td>
+                            <td class="col-xs-6">{{model.book.volumeInfo.averageRating}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <img ng-src="{{model.book.volumeInfo.imageLinks.thumbnail}}" class="book-detail-poster">
-                </div>
-            <div>
-            <tr>
-                <th>Author</th>
-                <td>
-                    <ul class="list-unstyled">
-                        <li ng-repeat="author in model.book.volumeInfo.authors">
-                            {{author}}
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <th>Publisher</th>
-                <td>{{model.book.volumeInfo.publisher}}</td>
-            </tr>
-            <tr>
-                <th>Published date</th>
-                <td>{{model.book.volumeInfo.publishedDate}}</td>
-            </tr>
-            <tr ng-show="model.book.volumeInfo.description">
-                <th>Description</th>
-                <td><div ng-bind-html="model.checkSafeHtml(model.book.volumeInfo.description)">
-                </div>
-                </td>
-            </tr>
-            <tr>
-                <th>Average rating</th>
-                <td>{{model.book.volumeInfo.averageRating}}</td>
-            </tr>
-            </div>
+        <div class="container-fluid row">
+            <h4>Brief Description:</h4>
+            <div ng-bind-html="model.checkSafeHtml(model.book.volumeInfo.description)"
+                 class="container-fluid zero-right-padding text-justify"></div>
+            <h4><br/></h4>
         </div>
     </div>
     <br>
-    <div class="form-group">
+    <div class="container-fluid form-group">
         <label for="yourReview">Add Your Review:</label>
         <textarea class="form-control" rows="5" id="yourReview"ng-model="model.review"></textarea>
         <a ng-click="model.createReview(model.review)" class="btn btn-block btn-primary">Submit</a>
         <a ng-show="model.enableEdit" ng-click="model.editReview(model.reviewId, model.review)" class="btn btn-block btn-info">Edit this review</a>
     </div>
     <div>
-    <ul class="list-group">
-        <li ng-repeat="review in model.reviews" class="list-group-item book-individual-review">
-            <a ng-click="model.deleteReview(review)" class="pull-right"><i class="fa fa-trash" aria-hidden="true"></i></i></a>
-            <p class="list-group-item-heading reviewer">Reviewer: {{review.firstName}} {{review.lastName}}</p>
-            <p class="list-group-item-text">{{review.review}}</p>
-        </li>
-    </ul>
+        <ul class="list-group">
+            <li ng-repeat="review in model.reviews" class="list-group-item book-individual-review">
+                <a ng-click="model.deleteReview(review)" class="pull-right"><i class="fa fa-trash" aria-hidden="true"></i></i></a>
+                <p class="list-group-item-heading reviewer">Reviewer: {{review.firstName}} {{review.lastName}}</p>
+                <p class="list-group-item-text">{{review.review}}</p>
+            </li>
+        </ul>
     </div>
     <div ng-show="model.reviewError" class="alert alert-danger add-to-book-shelf" role="alert">
         {{model.reviewError}}

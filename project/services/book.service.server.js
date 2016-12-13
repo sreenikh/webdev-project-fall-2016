@@ -14,7 +14,7 @@ module.exports = function (app, model) {
         var book = req.body;
         model
             .bookModel
-            .findBooksByBookshelfIdAndName(bookshelfId, book.name)
+            .findBooksByBookshelfIdAndGoogleBookId(bookshelfId, book.googleBookId)
             .then(
                 function (listOfBooks) {
                     if (0 !== listOfBooks.length) {

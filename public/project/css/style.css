@@ -2,9 +2,29 @@ input.form-control {
     margin-bottom: 5px;
 }
 
+body {
+    padding-top: 36px;
+}
+
 .profile-body {
     margin-top: 20px;
     margin-bottom: 50px;
+}
+
+.header-color-white {
+    color: white;
+}
+
+.footer-color-white {
+    color: white;
+}
+
+.header-color-black {
+    color: black;
+}
+
+.footer-color-black {
+    color: black;
 }
 
 .list-cell-padding {
@@ -105,6 +125,41 @@ input.form-control {
 
 .bold {
     font-weight: bold
+}
+
+.italic {
+    font-style: italic;
+}
+
+.text-left-align {
+    text-align: left;
+}
+
+.text-right-align {
+    text-align: right;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.left-align {
+    margin-left: 0px;
+    margin-right: auto;
+}
+
+.right-align {
+    margin-left: auto;
+    margin-right: 0px;
+}
+
+.position-rightward {
+    position: relative;
+    right: 0px;
+}
+
+.three-fourths-width {
+    width: 75%;
 }
 
 /*.vr {

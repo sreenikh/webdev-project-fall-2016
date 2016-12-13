@@ -7,10 +7,12 @@ module.exports = function () {
         googleBookId: String,
         _bookshelf: {type: mongoose.Schema.Types.ObjectId, ref: 'UserModel'},
         //reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'ReviewModel'}],
-        //averageRating: String,
-        //ratingsCount: String,
+        averageRating: Number,
+        ratingsCount: String,
         smallThumbnail: String,
         thumbnail: String,
+        publisher: String,
+        publishedDate: String,
         dateCreated: {type: Date, default: Date.now}
     }, {collection: "project.book"});
     return BookSchema;

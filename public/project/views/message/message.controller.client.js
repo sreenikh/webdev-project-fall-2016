@@ -11,10 +11,10 @@
 
         vm.navigateToChatView = navigateToChatView;
         vm.navigateToProfile = navigateToProfile;
+        vm.getDateString = getDateString;
 
         vm.messages = [];
         vm.listOfFriendsTOBeDisplayed = [];
-        vm.user = null;
 
         function init() {
             MessageService
@@ -67,12 +67,18 @@
         function navigateToProfile() {
             $location.url("/user/" + userId);
         }
+
+        function getDateString(date) {
+            return date.toDateString();
+        }
     }
 
     function MessageChatController($routeParams, $location, MessageService) {
         var vm = this;
         var userId = $routeParams['uid'];
         var friendId = $routeParams['fid'];
+
+        vm.userId = userId;
         vm.sendMessage = sendMessage;
         vm.deleteMessage = deleteMessage;
         vm.navigateToProfile = navigateToProfile;

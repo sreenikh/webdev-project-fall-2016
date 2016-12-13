@@ -10,8 +10,8 @@ module.exports = function () {
         findAllBooksForBookshelf: findAllBooksForBookshelf,
         findReviewObjectIdsForBook: findReviewObjectIdsForBook,
         findBookById: findBookById,
-        findBooksByBookshelfIdAndName: findBooksByBookshelfIdAndName,
-        updateBook: updateBook,
+        findBooksByBookshelfIdAndGoogleBookId: findBooksByBookshelfIdAndGoogleBookId,
+        //updateBook: updateBook,
         deleteBook: deleteBook,
         moveBetweenBookshelves: moveBetweenBookshelves,
         setModel: setModel
@@ -62,7 +62,7 @@ module.exports = function () {
             .findById(bookId)
             .then(
                 function (book) {
-                    return book.widgets;
+                    return book.reviews;
                 }
             );
     }
@@ -71,11 +71,11 @@ module.exports = function () {
         return BookModel.findById(bookId);
     }
 
-    function findBooksByBookshelfIdAndName(bookshelfId, name) {
-        return BookModel.find({_website: bookshelfId, name: name});
+    function findBooksByBookshelfIdAndGoogleBookId(bookshelfId, googleBookId) {
+        return BookModel.find({_bookshelf: bookshelfId, googleBookId: googleBookId});
     }
 
-    function updateBook(bookId, book) {
+    /*function updateBook(bookId, book) {
         return BookModel.update(
             {_id: bookId},
             {$set: {
@@ -83,7 +83,7 @@ module.exports = function () {
                 description: book.description
             }}
         );
-    }
+    }*/
 
     function moveBetweenBookshelves(bookId, oldBookshelfId, toBeMovedToBookshelfId) {
         return BookModel
