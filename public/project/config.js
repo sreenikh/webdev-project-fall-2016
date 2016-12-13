@@ -35,6 +35,7 @@
                 resolve: {
                     checkLogin: checkLogin
                 }
+
             })
             .when("/user/:uid/bookshelf", {
                 templateUrl: "views/bookshelf/bookshelf-list.view.client.html",
@@ -59,6 +60,11 @@
             .when("/user/:uid/message/:fid", {
                 templateUrl: "views/message/message-chat.view.client.html",
                 controller: "MessageChatController",
+                controllerAs: "model"
+            })
+            .when("/user/:uid/friends", {
+                templateUrl: "views/friends/friends.list.view.client.html",
+                controller: "FriendsListController",
                 controllerAs: "model"
             })
             .when("/user/:uid/bookshelf/:bsid/book", {

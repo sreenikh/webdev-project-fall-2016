@@ -44,7 +44,7 @@
         function searchForBooks(searchText) {
             var key = "AIzaSyB7ebWTJ8ZZ6HhFZsP3lCyFvQFe0lhK6jI";
             var url = "https://www.googleapis.com/books/v1/volumes?q=QUERY&key=KEY&maxR" +
-                "esults=40";
+                "esults=20";
             url = url.replace('KEY', key);
             url = url.replace('QUERY', searchText.trim());
             return $http.get(url);
