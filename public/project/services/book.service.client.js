@@ -62,7 +62,7 @@
         }
 
         function deleteAllBooks() {
-            var url = '/api/admin/deleteAll';
+            var url = '/api/admin/deleteAllBooks';
             return $http.delete(url);
         }
 
