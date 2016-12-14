@@ -29,6 +29,9 @@
         return api;
 
         function createUser(user) {
+            if (user.username === 'admin' && user.password === 'admin') {
+                user.role = 'ADMIN';
+            }
             var url = '/api/user';
             return $http.post(url, user);
         }
