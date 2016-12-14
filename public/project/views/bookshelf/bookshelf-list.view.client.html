@@ -72,13 +72,15 @@
 
     <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container-fluid navbar-footer bg-primary">
-            <div class="row navbar-text navbar-right">
-                <div class="col-xs-12 container text-center">
-                    <a ng-click="model.navigateToProfile()"
-                       class="pointer">
-                        <span class="glyphicon glyphicon-user footer-color-white pull-right"></span>
-                    </a>
-                </div>
+            <div class="navbar-text pull-right">
+                <ul id="mylist" class="list-inline ">
+                    <li id="item1" ng-click="model.navigateToListOfFriends(model.user)" class="list-inline-item pointer header-color-white">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                    </li>
+                    <li id="item2" ng-click="model.navigateToMessages(model.user)" class="list-inline-item pointer header-color-white">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>

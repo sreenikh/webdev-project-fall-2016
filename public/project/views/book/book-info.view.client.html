@@ -1,16 +1,16 @@
 <div>
     <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid row">
-            <!--<div class="container-fluid">-->
-                <!--<p class="navbar-text pull-left">-->
-                    <!--<a ng-click="model.navigateToEditWidget()"-->
-                       <!--class="pointer">-->
-                        <!--<span class="glyphicon glyphicon-menu-left footer-color-black"></span></a>-->
-                <!--</p>-->
-                <!--<a class="navbar-brand"><b>Book Details</b></a>-->
-            <!--</div>-->
-            <a class="navbar-brand"><b>Book Details</b></a>
+        <div class="container-fluid row bg-primary">
+            <div class="container-fluid">
+                <p class="navbar-text pull-left">
+                    <a ng-click="model.navigateToBookshelf()"
+                       class="pointer">
+                        <span class="glyphicon glyphicon-menu-left header-color-white"></span></a>
+                </p>
+                <a class="navbar-brand"><b>Book Details</b></a>
+            </div>
         </div>
+
     </nav>
 
     <div class="container-fluid">
@@ -85,14 +85,16 @@
     </div>
 
     <nav class="navbar navbar-default navbar-fixed-bottom">
-        <div class="container-fluid row">
-            <div class="container-fluid">
-                <p class="navbar-text pull-right">
-                    <a ng-click="model.navigateToProfile()"
-                       class="pointer">
-                        <span class="glyphicon glyphicon-user"></span>
-                    </a>
-                </p>
+        <div class="container-fluid navbar-footer bg-primary">
+            <div class="navbar-text pull-right">
+                <ul id="mylist" class="list-inline">
+                    <li id="item1" ng-click="model.navigateToListOfFriends(model.user)" class="list-inline-item header-color-white pointer ">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                    </li>
+                    <li id="item2" ng-click="model.navigateToMessages(model.user)" class="list-inline-item header-color-white pointer ">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>

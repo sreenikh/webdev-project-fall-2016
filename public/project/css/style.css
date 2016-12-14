@@ -315,4 +315,9 @@ textOverflow : "ellipsis"
 
 .headerIcon {
     padding-top: 15px;
+
+}
+
+fa-signout:hover {
+    color: red;
 }

@@ -18,6 +18,8 @@
         var bookshelfId = $routeParams['bsid'];
         vm.navigateToBookDetails = navigateToBookDetails;
         vm.navigateToSearchBooks = navigateToSearchBooks;
+        vm.navigateToProfile = navigateToProfile;
+        vm.navigateToMessages = navigateToMessages;
 
         function init() {
             BookService
@@ -32,6 +34,13 @@
         }
 
         init();
+
+        function navigateToProfile() {
+            $location.url("/user/" + userId);
+        }
+        function navigateToMessages(user) {
+            $location.url("/user/" + userId + "/message");
+        }
 
         function navigateToBookDetails(book) {
             var bookId = book._id;
@@ -59,6 +68,10 @@
         vm.checkSafeHtml = checkSafeHtml;
         vm.editOrUpdate = editOrUpdate;
         vm.deleteReview = deleteReview;
+        vm.navigateToBookshelf = navigateToBookshelf;
+        vm.navigateToProfile = navigateToProfile;
+        vm.navigateToMessages = navigateToMessages;
+
 
         var bookshelvesForUser = [];
         vm.bookshelf = {};
@@ -134,6 +147,17 @@
 
         init();
 
+        function navigateToProfile() {
+            $location.url("/user/" + userId);
+        }
+        function navigateToMessages(user) {
+            $location.url("/user/" + userId + "/message");
+        }
+
+        function navigateToBookshelf() {
+            $location.url("/user/" + userId + "/bookshelf/"+vm.bookshelf.name);
+        }
+
         function checkBookshelf(bookshelfType) {
             return bookshelfType === vm.bookshelf.type;
         }
@@ -207,6 +231,7 @@
         vm.navigateToProfile = navigateToProfile;
         vm.searchForBooks = searchForBooks;
         vm.navigateToBookView = navigateToBookView;
+        vm.navigateToMessages = navigateToMessages;
 
         vm.books = [];
 
@@ -214,6 +239,10 @@
 
         function navigateToProfile() {
             $location.url("/user/" + userId);
+        }
+
+        function navigateToMessages(user) {
+            $location.url("/user/" + userId + "/message");
         }
 
         function searchForBooks() {
@@ -240,10 +269,11 @@
         vm.navigateToProfile = navigateToProfile;
         vm.searchForBooks = searchForBooks;
         vm.navigateToBookView = navigateToBookView;
+        vm.navigateToMessages = navigateToMessages;
 
         vm.books = [];
 
-        //var userId = $routeParams['uid'];
+        var userId = $routeParams['uid'];
 
         function navigateToProfile() {
             $location.url("/user/" + userId);
@@ -263,6 +293,13 @@
             }
         }
 
+        function navigateToProfile() {
+            $location.url("/user/" + userId);
+        }
+        function navigateToMessages(user) {
+            $location.url("/user/" + userId + "/message");
+        }
+
         function navigateToBookView(book) {
             $location.url("/book/info/" + book.id);
         }
@@ -277,6 +314,9 @@
         vm.addToBookshelf = addToBookshelf;
         vm.createReview = createReview;
         vm.checkSafeHtml = checkSafeHtml;
+        vm.navigateToBookshelf = navigateToBookshelf;
+        vm.navigateToProfile = navigateToProfile;
+        vm.navigateToMessages = navigateToMessages;
 
         vm.reviews = [];
 
@@ -315,6 +355,17 @@
         }
 
         init();
+
+        function navigateToBookshelf() {
+            $location.url("/user/" + userId + "/bookshelf/"+vm.bookshelf.name);
+        }
+
+        function navigateToProfile() {
+            $location.url("/user/" + userId);
+        }
+        function navigateToMessages(user) {
+            $location.url("/user/" + userId + "/message");
+        }
 
         function addToBookshelf(bookshelfType) {
             console.log(bookshelfType);
@@ -412,5 +463,11 @@
         }
 
         init();
+        function navigateToProfile() {
+            $location.url("/user/" + userId);
+        }
+        function navigateToMessages(user) {
+            $location.url("/user/" + userId + "/message");
+        }
     }
 })();

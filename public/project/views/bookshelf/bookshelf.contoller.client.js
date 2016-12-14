@@ -10,6 +10,8 @@
         vm.enlistBooks = enlistBooks;
         vm.navigateToProfile = navigateToProfile;
         vm.navigateToSearchBooks = navigateToSearchBooks;
+        vm.navigateToAllMessages = navigateToAllMessages;
+
 
         var userId = $routeParams['uid'];
 
@@ -25,6 +27,11 @@
                 });
         }
         init();
+
+
+        function navigateToAllMessages() {
+            $location.url("/user/" + userId + "/message");
+        }
 
         function enlistBooks(bookshelf) {
             var bsId = bookshelf._id;
