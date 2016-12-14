@@ -8,6 +8,7 @@ module.exports = function (app, model) {
     app.put('/api/book/:bookId', updateBook);
     app.put('/api/book/movetobookshelf/:bookId', moveToBookshelf);
     app.delete('/api/book/:bookId', deleteBook);
+    app.delete('/api/admin/deleteAllBooks', deleteAllBooks);
 
     function createBook(req, res) {
         var bookshelfId = req.params.bookshelfId;
@@ -148,6 +149,20 @@ module.exports = function (app, model) {
         model
             .bookModel
             .deleteBook(bookId)
+            .then(
+                function (response) {
+                    res.send(true);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            );
+    }
+
+    function deleteAllBooks(req, res) {
+        model
+            .bookModel
+            .deleteAllBooks()
             .then(
                 function (response) {
                     res.send(true);

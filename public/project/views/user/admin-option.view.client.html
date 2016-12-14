@@ -27,7 +27,7 @@
         <div class="input-group">
             <input id="searchText" ng-model="model.searchText" type="text" class="form-control">
             <span class="input-group-btn">
-                <a ng-click="model.searchForFriends(model.searchText)"
+                <a ng-click="model.search(model.searchText)"
                    class="btn btn-info"
                    type="button">
                     <span class="glyphicon glyphicon-search"></span>
@@ -36,12 +36,33 @@
         </div>
         <br>
         <div>
-            <div ng-repeat="user in model.searchResults">
+            <div ng-repeat="searchedResult in model.searchResults">
                 <div class="row">
-                    <div class="col-xs-10">{{user.username}}: {{user.firstName}} {{user.lastName}}</div>
-                    <div class="col-xs-2">
-                        <button ng-click="model.addFriend(user)"
-                                class="btn btn-primary pull-right">Add</button>
+                    <div class="col-xs-8">{{searchedResult.username}}: {{searchedResult.firstName}} {{searchedResult.lastName}}</div>
+                    <div class="col-xs-4">
+                        <div class="btn-group btn-block" data-toggle="buttons-radio">
+                            <button ng-click="model.makeAdmin(entity)"
+                                    class="btn btn-success">Make Admin</button>
+                            <button ng-click="model.evictReader(entity)"
+                                    class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div>
+            <h3>List of all Readers:</h3>
+            <div ng-repeat="entity in model.allEntities">
+                <div class="row">
+                    <div class="col-xs-8">{{entity.username}}: {{entity.firstName}} {{entity.lastName}}</div>
+                    <div class="col-xs-4">
+                        <div class="btn-group btn-block" data-toggle="buttons-radio">
+                            <button ng-click="model.makeAdmin(entity)"
+                                    class="btn btn-success">Make Admin</button>
+                            <button ng-click="model.evictReader(entity)"
+                                    class="btn btn-danger">Delete</button>
+                        </div>
                     </div>
                 </div>
                 <br>
@@ -49,8 +70,7 @@
         </div>
 
         <br>
-        <a class="btn btn-primary btn-block"
-           ng-click="model.navigateToAllMessages()">My Messages</a>
+
 
         <!--<div class="container-fluid zero-right-padding">
             <ul class="container-fluid list-group profile-body">
@@ -61,48 +81,21 @@
                         {{friend.firstname}}
                     </a>&ndash;&gt;
                     <div class="row">
-                        <div class="col-xs-8">{{friend.username}}: {{friend.firstName}} {{friend.lastName}}</div>
-                        <div class="col-xs-4">
-                            <div class="btn-group btn-block" data-toggle="buttons-radio">
-                                <button ng-click="model.navigateToMessageFriend(friend)"
-                                        class="btn btn-warning">Message</button>
-                                <button ng-click="model.removeFriend(user)"
-                                        class="btn btn-danger">Remove</button>
-                            </div>
+                        <div class="col-xs-6">{{friend.username}}: {{friend.firstName}} {{friend.lastName}}</div>
+                        <div class="col-xs-5">
+                            <button ng-click="model.navigateToMessageFriend(friend)"
+                                    class="btn btn-warning">Message</button>
+                        </div>
+                        <div class="col-xs-1">
+                            <button ng-click="model.removeFriend(user)"
+                                    class="btn btn-danger btn-xs pull-right">Remove</button>
                         </div>
                     </div>
                     <br>
-                    &lt;!&ndash;<a ng-click="model.navigateToEditWebsite(bookshelf)"&ndash;&gt;
-                    &lt;!&ndash;class="pointer pull-right">&ndash;&gt;
-                    &lt;!&ndash;<span class="glyphicon glyphicon-cog"></span>&ndash;&gt;
-                    &lt;!&ndash;</a>&ndash;&gt;
                     <br>
                 </li>
             </ul>
         </div>-->
-
-        <div>
-            <h3>Friends:</h3>
-            <div ng-repeat="friend in model.friends">
-                <div class="row">
-                    <div class="col-xs-8">
-                        <h5>
-                            <span class="italic bold">@{{friend.username}}:</span>
-                            <span class="bold"> {{friend.firstName}} {{friend.lastName}}</span>
-                        </h5>
-                    </div>
-                    <div class="col-xs-4 zero-right-padding">
-                        <div class="btn-group btn-block pull-right" data-toggle="buttons-radio">
-                            <button ng-click="model.navigateToMessageFriend(friend)"
-                                    class="btn btn-warning">Message</button>
-                            <button ng-click="model.removeFriend(user)"
-                                    class="btn btn-danger">Remove Friend</button>
-                        </div>
-                    </div>
-                </div>
-                <br>
-            </div>
-        </div>
     </div>
 
     <nav class="navbar navbar-default navbar-fixed-bottom">

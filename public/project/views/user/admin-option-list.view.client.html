@@ -9,7 +9,7 @@
                             <span class="glyphicon glyphicon-menu-left header-color-white"></span>
                         </a>
                     </p>
-                    <a class="navbar-brand"><b class="header-color-white">Chat with {{model.nameOfFriend}}</b></a>
+                    <a class="navbar-brand"><b class="header-color-white">Books</b></a>
                 </div>
                 <div class="col-md-offset-4 col-md-4">
                     <p class="navbar-text pull-right">
@@ -23,33 +23,15 @@
         </div>
     </nav>
 
-    <div class="container-fluid profile-body">
-        <a class="btn btn-primary btn-block"
-           ng-hide="model.checkIfOtherUserIsFriend()"
-           ng-click="model.addFriend()">Add as Friend</a>
-        <div>
-            <textarea id="messageText" ng-model="model.messageText" type="text" class="form-control"></textarea>
-            <br>
-            <a ng-click="model.sendMessage(model.messageText)"
-               class="btn btn-block btn-info">
-                <span class="fa fa-paper-plane"></span>
-            </a>
-        </div>
+    <div class="container-fluid">
         <div class="container-fluid zero-right-padding">
             <ul class="container-fluid list-group profile-body">
-                <li ng-repeat="message in model.messages"
-                    class="list-group-item no-border zero-left-padding zero-right-padding word-wrap-break-word">
-                    <div ng-class="{'right-align': model.userId == message.fromId, 'left-align': model.userId == message.toId, 'three-fourths-width': true}">
-                        <p ng-class="{'text-right-align': model.userId == message.fromId,
-                                    'text-left-align': model.userId == message.toId,
-                                    'italic': true, 'bold': true,
-                                    'bg-success': model.userId == message.fromId,
-                                    'bg-warning': model.userId == message.toId}">
-                            {{message.message}}
-                            <br/><br/>
-                            <span class="normal">({{model.getMessageTime(message.dateCreated)}})</span>
-                        </p>
-                    </div>
+                <li ng-repeat="option in model.options"
+                    class="list-group-item no-border zero-left-padding zero-right-padding">
+                    <a ng-click="model.submitOption(option.optionIndex)"
+                       class="pointer">
+                        {{option.text}}
+                    </a>
                 </li>
             </ul>
         </div>

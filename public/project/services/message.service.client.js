@@ -9,7 +9,8 @@
             deleteMessage: deleteMessage,
             getMessagesFromOneUserToAnotherUser: getMessagesFromOneUserToAnotherUser,
             getAllMessagesForUser: getAllMessagesForUser,
-            setMessageStatusAsRead: setMessageStatusAsRead
+            setMessageStatusAsRead: setMessageStatusAsRead,
+            deleteAllMessages: deleteAllMessages
         };
         return api;
 
@@ -27,6 +28,11 @@
 
         function deleteMessage(messageId) {
             return $http.delete("/api/message/" + messageId);
+        }
+
+        function deleteAllMessages() {
+            var url = '/api/admin/deleteAllMessages';
+            return $http.delete(url);
         }
 
         function getMessagesFromOneUserToAnotherUser(fromId, toId) {

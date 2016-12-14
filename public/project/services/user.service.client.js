@@ -16,10 +16,14 @@
             findUserByCredentials: findUserByCredentials,
             findAllMatchingNames: findAllMatchingNames,
             findFriendsForUser: findFriendsForUser,
+            findAllUsers: findAllUsers,
             addFriend: addFriend,
             removeFriend: removeFriend,
             updateUser: updateUser,
             deleteUser: deleteUser,
+            deleteAllUsers: deleteAllUsers,
+            makeAdmin: makeAdmin,
+            evictReader: evictReader,
             logout: logout
         };
         return api;
@@ -75,6 +79,11 @@
             return $http.post(url);
         }
 
+        function findAllUsers(adminId) {
+            var url = '/api/admin/' + adminId + '/findAllUsers';
+            return $http.get(url);
+        }
+
         function addFriend(existingUserId, newUser) {
             var url = '/api/user/' + existingUserId + '/addFriend';
             return $http.post(url, newUser)
@@ -93,6 +102,21 @@
         function deleteUser(userId) {
             var url = '/api/user/' + userId;
             return $http.delete(url);
+        }
+
+        function deleteAllUsers() {
+            var url = '/api/admin/deleteAllUsers';
+            return $http.delete(url);
+        }
+
+        function evictReader(user) {
+            var url = '/api/admin/evictReader';
+            return $http.post(url, user);
+        }
+
+        function makeAdmin(user) {
+            var url = '/api/admin/makeAdmin';
+            return $http.put(url, user);
         }
 
         function logout() {

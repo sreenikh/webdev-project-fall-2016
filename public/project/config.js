@@ -37,30 +37,53 @@
                 }
 
             })
+            .when("/admin/:aid/option", {
+                templateUrl: "views/user/admin-option-list.view.client.html",
+                controller: "AdminOptionsListController",
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
+            })
+            .when("/admin/:aid/option/:oid", {
+                templateUrl: "views/user/admin-option.view.client.html",
+                controller: "AdminOptionsController",
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
+            })
             .when("/user/:uid/bookshelf", {
                 templateUrl: "views/bookshelf/bookshelf-list.view.client.html",
                 controller: "BookshelfListController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
             })
             .when("/user/:uid/friend", {
                 templateUrl: "views/friend/friend-list.view.client.html",
                 controller: "FriendsListController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
             })
-            /*.when("/user/:uid/friend/:fid", {
-                templateUrl: "views/friend/friendlist.view.client.html",
-                controller: "FriendsListController",
-                controllerAs: "model"
-            })*/
             .when("/user/:uid/message", {
                 templateUrl: "views/message/message-list.view.client.html",
                 controller: "MessageListController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
             })
             .when("/user/:uid/message/:fid", {
                 templateUrl: "views/message/message-chat.view.client.html",
                 controller: "MessageChatController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
             })
             .when("/user/:uid/friends", {
                 templateUrl: "views/friends/friends.list.view.client.html",
@@ -70,32 +93,50 @@
             .when("/user/:uid/bookshelf/:bsid/book", {
                 templateUrl: "views/book/book-list.view.client.html",
                 controller: "BookListController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
             })
             .when("/user/:uid/book/search", {
                 templateUrl: "views/book/book-search.view.client.html",
                 controller: "BookSearchController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
             })
             .when("/book/search", {
                 templateUrl: "views/book/public-book-search.view.client.html",
                 controller: "PublicBookSearchController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
             })
             .when("/user/:uid/book/info/:googleBookId", {
                 templateUrl: "views/book/book-info.view.client.html",
                 controller: "BookInfoController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
             })
             .when("/book/info/:googleBookId", {
                 templateUrl: "views/book/public-book-info.view.client.html",
                 controller: "PublicBookInfoController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
             })
             .when("/user/:uid/bookshelf/:bsid/book/:bid", {
                 templateUrl: "views/book/book.view.client.html",
                 controller: "BookController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLogin: checkLogin
+                }
             })
             .otherwise({
                 redirectTo: "/login"

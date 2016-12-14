@@ -20,19 +20,6 @@
                 <button type="button" ng-hide="model.checkBookshelf('TO_READ')" ng-click="model.moveToBookshelf('TO_READ')" class="col-xs-6 btn btn-primary">Move to "To Be Read"</button>
             </div>
             <br>
-            <!--<div class="col-sm-6">
-                <img ng-src="{{model.book.thumbnail}}" class="book-detail-poster">
-            </div>
-
-            <br>
-
-            <br>
-            {{model.book.title}}
-            <br>
-            <br>
-            {{model.book.googleBookId}}
-            <br>-->
-
             <div class="row widget-list-element-top-bottom-margin">
                 <div class="col-xs-3">
                     <img ng-src="{{model.book.volumeInfo.imageLinks.thumbnail}}" class="book-detail-poster">
@@ -66,6 +53,10 @@
                             <td class="col-xs-3">Average Rating:</td>
                             <td class="col-xs-6">{{model.book.volumeInfo.averageRating}}</td>
                         </tr>
+                        <tr>
+                            <td class="col-xs-3">Rating Count:</td>
+                            <td class="col-xs-6">{{model.book.volumeInfo.ratingsCount}}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -76,27 +67,31 @@
                      class="container-fluid zero-right-padding text-justify"></div>
                 <h4><br/></h4>
             </div>
-
             <button ng-click="model.deleteBook()" class="btn btn-block btn-danger">Delete Book from Bookshelf</button>
-
-        </div>
-        <div class="form-group">
-            <label for="yourReview">Add Your Review:</label>
-            <textarea class="form-control" rows="5" id="yourReview" ng-model="model.review"></textarea>
-            <a ng-click="model.createReview(model.review)" class="btn btn-block btn-primary">Submit</a>
-            <a ng-show="model.enableEdit" ng-click="model.editReview(model.reviewId, model.review)" class="btn btn-block btn-info">Edit this review</a>
-        </div>
-        <div>
-            <ul class="list-group">
-                <li ng-repeat="review in model.reviews" class="list-group-item book-individual-review">
-                    <a ng-click="model.deleteReview(review)" class="pull-right"><i class="fa fa-trash" aria-hidden="true"></i></i></a>
-                    <p class="list-group-item-heading reviewer">Reviewer: {{review.firstName}} {{review.lastName}}</p>
-                    <p class="list-group-item-text">{{review.review}}</p>
-                </li>
-            </ul>
-        </div>
-        <div ng-show="model.reviewError" class="alert alert-danger add-to-book-shelf" role="alert">
-            {{model.reviewError}}
+            <br/>
+            <br/>
+            <div class="form-group">
+                <label for="yourReview">{{model.userHasAlreadyReviewed ? 'Click here to edit' : 'Add'}} your review:</label>
+                <textarea id="reviewEditTextArea" ng-hide="model.userHasAlreadyReviewed && model.EDIT == model.editUpdateString" class="form-control" rows="5" id="yourReview" ng-model="model.reviewOfThisUser.review"></textarea>
+                <button ng-hide="model.userHasAlreadyReviewed" ng-click="model.createReview(model.reviewOfThisUser.review)" class="btn btn-block btn-primary">Submit</button>
+                <div ng-show="model.userHasAlreadyReviewed" class="btn-group btn-block widget-list-element-top-bottom-margin" data-toggle="buttons-radio">
+                    <button type="button" ng-click="model.editOrUpdate()" class="col-xs-6 btn" ng-class="{'btn-success': model.UPDATE == model.editUpdateString, 'btn-primary': model.EDIT == model.editUpdateString}">{{model.editUpdateString}}</button>
+                    <button type="button" ng-click="model.deleteReview()" class="col-xs-6 btn btn-danger">Delete</button>
+                </div>
+            </div>
+            <br/>
+            <h4 ng-show="0 != model.reviews.length">Reviews:</h4>
+            <div>
+                <ul class="list-group">
+                    <li ng-repeat="review in model.reviews" class="list-group-item book-individual-review">
+                        <p class="list-group-item-heading reviewer">Reviewer: {{review.name}}</p>
+                        <p class="list-group-item-text">{{review.review}}</p>
+                    </li>
+                </ul>
+            </div>
+            <div ng-show="model.reviewError" class="alert alert-danger add-to-book-shelf" role="alert">
+                {{model.reviewError}}
+            </div>
         </div>
     </div>
 

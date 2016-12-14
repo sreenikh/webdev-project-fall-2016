@@ -28,7 +28,7 @@
             <div ng-repeat="book in model.books" ng-click="model.navigateToBookView(book)">
                 <div class="row widget-list-element-top-bottom-margin">
                     <div class="col-xs-2 pointer">
-                        <img ng-src="{{book.volumeInfo.imageLinks.thumbnail}}" height="75px">
+                        <img ng-src="{{book.volumeInfo.imageLinks.smallThumbnail}}" height="75px">
                     </div>
                     <div class="col-xs-10 pointer">
                         <h4 class="bold zero-margin-top">

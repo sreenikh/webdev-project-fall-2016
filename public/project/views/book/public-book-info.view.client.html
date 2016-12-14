@@ -14,58 +14,66 @@
 
     <div class="container-fluid">
         <div class="profile-body">
-            <!--<br>-->
-            <!--{{model.book.id}}-->
-            <!--<br>-->
-            <!--{{model.book.volumeInfo.title}}-->
-            <!--<br>-->
-            <!--{{model.book.volumeInfo.subtitle}}-->
-            <!--<br>-->
-            <!--{{model.book.volumeInfo.authors}}-->
-            <!--<br>-->
-            <!--<p>___________________________________________________________________________</p>-->
-            <!--<br>-->
-            <!--{{model.book.volumeInfo.title}}-->
-            <!--<br>-->
-            <!--{{model.book.id}}-->
-            <!--<br>-->
-            <!--{{model.book.volumeInfo.imageLinks.smallThumbnail}}-->
-            <!--<br>-->
-            <!--{{model.book.volumeInfo.imageLinks.thumbnail}}-->
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <img ng-src="{{model.book.volumeInfo.imageLinks.thumbnail}}" class="book-detail-poster">
+            <div class="row widget-list-element-top-bottom-margin">
+                <div class="col-xs-3">
+                    <img ng-src="{{model.book.volumeInfo.imageLinks.thumbnail}}" class="book-detail-poster">
                 </div>
+                <div class="col-xs-9">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td class="col-xs-3">Title:</td>
+                            <td class="col-xs-6">{{model.book.volumeInfo.title}}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-3">Author(s):</td>
+                            <td class="col-xs-6">
+                                <ul class="list-unstyled">
+                                    <li ng-repeat="author in model.book.volumeInfo.authors">
+                                        {{author}}
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-3">Publisher:</td>
+                            <td class="col-xs-6">{{model.book.volumeInfo.publisher}}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-3">Published date:</td>
+                            <td class="col-xs-6">{{model.book.volumeInfo.publishedDate}}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-3">Average Rating:</td>
+                            <td class="col-xs-6">{{model.book.volumeInfo.averageRating}}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-xs-3">Rating Count:</td>
+                            <td class="col-xs-6">{{model.book.volumeInfo.ratingsCount}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="container-fluid row">
+                <h4>Brief Description:</h4>
+                <div ng-bind-html="model.checkSafeHtml(model.book.volumeInfo.description)"
+                     class="container-fluid zero-right-padding text-justify"></div>
+                <h4><br/></h4>
+            </div>
+            <br>
+            <h4 ng-show="0 != model.reviews.length">Reviews:</h4>
             <div>
-            <tr>
-                <th>Author</th>
-                <td>
-                    <ul class="list-unstyled">
-                        <li ng-repeat="author in model.book.volumeInfo.authors">
-                            {{author}}
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <th>Publisher</th>
-                <td>{{model.book.volumeInfo.publisher}}</td>
-            </tr>
-            <tr>
-                <th>Published date</th>
-                <td>{{model.book.volumeInfo.publishedDate}}</td>
-            </tr>
-            <tr ng-show="model.book.volumeInfo.description">
-                <th>Description</th>
-                <td><div ng-bind-html="model.checkSafeHtml(model.book.volumeInfo.description)">
-                </div>
-                </td>
-            </tr>
-            <tr>
-                <th>Average rating</th>
-                <td>{{model.book.volumeInfo.averageRating}}</td>
-            </tr>
+                <ul class="list-group">
+                    <li ng-repeat="review in model.reviews" class="list-group-item book-individual-review">
+                        <p class="list-group-item-heading reviewer">Reviewer: {{review.firstName}} {{review.lastName}}</p>
+                        <p class="list-group-item-text">{{review.review}}</p>
+                    </li>
+                </ul>
+            </div>
+            <div ng-show="model.reviewError" class="alert alert-danger add-to-book-shelf" role="alert">
+                {{model.reviewError}}
             </div>
         </div>
     </div>

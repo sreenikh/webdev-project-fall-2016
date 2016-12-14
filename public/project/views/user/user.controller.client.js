@@ -6,7 +6,9 @@
         .controller("LoginController", LoginController)
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController)
-        .controller("UserHomeController", UserHomeController);
+        .controller("UserHomeController", UserHomeController)
+        .controller("AdminOptionsListController", AdminOptionsListController)
+        .controller("AdminOptionsController", AdminOptionsController);
 
     // vm means view model
     function LoginController($location, UserService) {
@@ -119,6 +121,7 @@
         vm.navigateToProfile = navigateToProfile;
         vm.navigateToListOfFriends = navigateToListOfFriends;
         vm.navigateToMessages = navigateToMessages;
+        vm.navigateToAdminOptions = navigateToAdminOptions;
         vm.unregisterUser = unregisterUser;
         vm.logout = logout;
 
@@ -182,6 +185,10 @@
 
         function navigateToMessages(user) {
             $location.url("/user/" + userId + "/message");
+        }
+
+        function navigateToAdminOptions(user) {
+            $location.url("/admin/" + userId + "/option");
         }
 
         function unregisterUser(user) {
@@ -301,6 +308,110 @@
                 .success(function () {
                     $location.url("/login");
                 })
+        }
+    }
+
+    function AdminOptionsListController($routeParams, $location, UserService, BookshelfService, BookService, MessageService, ReviewService) {
+        var vm = this;
+
+        var adminId = $routeParams['aid'];
+
+        var options = [
+            {text: "Manage all readers", optionIndex: 0},
+            {text: "Purge Messages", optionIndex: 1},
+            {text: "Purge Reviews", optionIndex: 2},
+            {text: "Clear DB completely", optionIndex: 3}
+        ];
+
+        vm.options = options;
+        vm.submitOption = submitOption;
+
+        function submitOption(optionIndex) {
+            if (0 == optionIndex) {
+                $location.url("/admin/" + adminId + "/option/" + optionIndex);
+            } else if (1 == optionIndex) {
+                MessageService
+                    .deleteAllMessages()
+                    .success(function (response) {
+                        alert("All messages purged!");
+                    })
+                    .error(function (error) {
+                    });
+            } else if (2 == optionIndex) {
+                ReviewService
+                    .deleteAllReviews()
+                    .success(function (response) {
+                        alert("All reviews purged!");
+                    })
+                    .error(function (error) {
+                    });
+            } else if (3 == optionIndex) {
+                UserService.deleteAllUsers();
+                BookshelfService.deleteAllBookshelves();
+                BookService.deleteAllBooks();
+                MessageService.deleteAllMessages();
+                ReviewService.deleteAllReviews();
+                $location.url("/");
+            }
+        }
+    }
+
+    function AdminOptionsController($routeParams, $location, UserService) {
+        var vm = this;
+        var adminId = $routeParams['aid'];
+        var optionIndex = $routeParams['oid'];
+
+        vm.allEntities = [];
+        vm.searchResults = [];
+        vm.search = search;
+        vm.makeAdmin = makeAdmin;
+        vm.evictReader = evictReader;
+
+        function init(optionIndex) {
+            if (0 == optionIndex) {
+                UserService
+                    .findAllUsers()
+                    .success(function (listOfAllUsers) {
+                        vm.allEntities = listOfAllUsers;
+                    })
+                    .error(function (error) {
+                    });
+            }
+        }
+        init(optionIndex);
+
+        function search(searchText) {
+            if (0 == optionIndex) {
+                UserService
+                    .findAllMatchingNames(adminId, searchText)
+                    .success(function (listOfUsers) {
+                        vm.searchResults = listOfUsers;
+                    })
+                    .error(function (error) {
+                    });
+            }
+        }
+
+        function makeAdmin(user) {
+            UserService
+                .makeAdmin(user)
+                .success(function (response) {
+                    alert("Admin rights provided!");
+                    init(optionIndex);
+                })
+                .error(function (error) {
+                });
+        }
+
+        function evictReader(user) {
+            UserService
+                .evictReader(user)
+                .success(function (response) {
+                    alert("Reader deleted!");
+                    init(optionIndex);
+                })
+                .error(function (error) {
+                });
         }
     }
 })();

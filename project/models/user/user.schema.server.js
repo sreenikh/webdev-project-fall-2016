@@ -12,7 +12,6 @@ module.exports = function () {
         email: String,
         phone: String,
         bookshelves: [{type: mongoose.Schema.Types.ObjectId, ref: 'BookshelfModel'}],
-        // reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'ReviewModel'}],
         dateCreated: {type: Date, default: Date.now},
         role: {type: String, enum:["ADMIN", "READER"], default: "READER"},
         friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'UserModel'}]

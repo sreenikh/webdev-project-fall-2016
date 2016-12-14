@@ -59,6 +59,9 @@
         <br>
         <a ng-click="model.logout()"
            class="btn btn-danger btn-block">Logout</a>
+        <a ng-click="model.navigateToAdminOptions(model.user)"
+           ng-show="'ADMIN' == model.user.role"
+           class="btn btn-success btn-block">Admin Options</a>
         <a ng-click="model.unregisterUser(model.user)"
            class="btn btn-warning btn-block">Unregister</a>
     </div>

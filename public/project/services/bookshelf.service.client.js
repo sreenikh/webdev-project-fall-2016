@@ -9,7 +9,8 @@
         var api = {
             createBookshelf: createBookshelf,
             findBookshelvesForUser: findBookshelvesForUser,
-            findBookshelfById: findBookshelfById
+            findBookshelfById: findBookshelfById,
+            deleteAllBookshelves: deleteAllBookshelves
         };
         return api;
 
@@ -29,6 +30,11 @@
         function findBookshelfById(bookshelfId) {
             var url = '/api/bookshelf/' + bookshelfId;
             return $http.get(url);
+        }
+
+        function deleteAllBookshelves() {
+            var url = '/api/admin/deleteAllBookshelves';
+            return $http.delete(url);
         }
     }
 })();

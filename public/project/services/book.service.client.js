@@ -17,7 +17,8 @@
             getSampleBooks:getSampleBooks,
             createReviewForBook:createReviewForBook,
             findReviewsByBookId:findReviewsByBookId,
-            findReviewsByGoogleBookId:findReviewsByGoogleBookId
+            findReviewsByGoogleBookId:findReviewsByGoogleBookId,
+            deleteAllBooks: deleteAllBooks
         };
         return api;
 
@@ -57,6 +58,11 @@
 
         function deleteBook(bookId) {
             var url = '/api/book/' + bookId;
+            return $http.delete(url);
+        }
+
+        function deleteAllBooks() {
+            var url = '/api/admin/deleteAll';
             return $http.delete(url);
         }
 

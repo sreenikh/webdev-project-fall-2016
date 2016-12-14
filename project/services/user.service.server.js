@@ -49,10 +49,14 @@ module.exports = function (app, model) {
     app.post('/api/user/bulkFindUsersByIds', bulkFindUsersByIds);
     app.post('/api/user/:uid/findFriendsForUser', findFriendsForUser);
     app.post('/api/user/:uid/findAllMatchingNames', findAllMatchingNames);
+    app.get('/api/admin/:aid/findAllUsers', findAllUsers);
     app.post('/api/user/:uid/addFriend', addFriend);
     app.post('/api/user/:uid/removeFriend', removeFriend);
     app.put('/api/user/:uid', loggedInAndSelf, updateUser);
+    app.put('/api/admin/makeAdmin', makeAdmin);
+    app.post('/api/admin/evictReader', evictReader);
     app.delete('/api/user/:uid', loggedInAndSelf, deleteUser);
+    app.delete('/api/admin/deleteAllUsers', deleteAllUsers);
 
     app.get('/auth/google/callback',
         passport.authenticate('google', {
@@ -390,6 +394,20 @@ module.exports = function (app, model) {
             )
     }
 
+    function findAllUsers(req, res) {
+        model
+            .userModel
+            .findAllUsers()
+            .then(
+                function (listOfUsers) {
+                    res.json(listOfUsers);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            )
+    }
+
     function addFriend(req, res) {
         var existingUserId = req.params.uid;
         var newUserId = req.body._id;
@@ -500,6 +518,36 @@ module.exports = function (app, model) {
             );
     }
 
+    function makeAdmin(req, res) {
+        var userId = req.body._id;
+        model
+            .userModel
+            .makeAdmin(userId)
+            .then(
+                function (response) {
+                    res.send(true);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            );
+    }
+
+    function evictReader(req, res) {
+        var userId = req.body._id;
+        model
+            .userModel
+            .deleteUser(userId)
+            .then(
+                function (response) {
+                    res.send(true);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            );
+    }
+
     function deleteUser(req, res) {
         var userId = req.params.uid;
         model
@@ -515,11 +563,17 @@ module.exports = function (app, model) {
             );
     }
 
-    function generateNewId() {
-        return new Date().getTime().toString();
-    }
-
-    function cloneObject(object) {
-        return JSON.parse(JSON.stringify(object));
+    function deleteAllUsers(req, res) {
+        model
+            .userModel
+            .deleteAllUsers()
+            .then(
+                function (response) {
+                    res.send(true);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            );
     }
 }

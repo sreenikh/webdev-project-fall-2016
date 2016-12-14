@@ -12,8 +12,8 @@ module.exports = function () {
         findAllBookshelvesForUser: findAllBookshelvesForUser,
         findBookshelfById: findBookshelfById,
         findBookObjectIdsForBookshelf: findBookObjectIdsForBookshelf,
-        //updateBookshelf: updateBookshelf,
         deleteBookshelf: deleteBookshelf,
+        deleteAllBookshelves: deleteAllBookshelves,
         setModel: setModel
     };
     return api;
@@ -146,6 +146,10 @@ module.exports = function () {
                 function (error) {
 
                 });
+    }
+
+    function deleteAllBookshelves() {
+        return BookshelfModel.remove()
     }
 
     function setModel(_model) {

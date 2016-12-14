@@ -23,21 +23,27 @@
         </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid profile-body">
         <div class="container-fluid zero-right-padding">
-            <ul class="container-fluid list-group profile-body">
-                <li ng-repeat="book in model.books"
-                    class="list-group-item no-border zero-left-padding zero-right-padding">
-                    <a ng-click="model.navigateToBookDetails(book)"
-                       class="pointer">
-                        {{book.title}}
-                    </a>
-                    <a ng-click="model.navigateToEditWebsite(bookshelf)"
-                       class="pointer pull-right">
-                        <span class="glyphicon glyphicon-cog"></span>
-                    </a>
-                </li>
-            </ul>
+            <div ng-repeat="book in model.books" ng-click="model.navigateToBookDetails(book)">
+                <div class="row widget-list-element-top-bottom-margin">
+                    <div class="col-xs-2 pointer">
+                        <img ng-src="{{book.smallThumbnail}}" height="50px">
+                    </div>
+                    <div class="col-xs-10 pointer">
+                        <h4 class="bold zero-margin-top">
+                            {{book.title}}
+                        </h4>
+                        <ul class="list-inline zero-margin-bottom">
+                            <li class="inline" ng-repeat="author in book.authors">
+                                <h5 class="zero-margin-bottom">&bull; {{author}}</h5>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+            </div>
         </div>
     </div>
 

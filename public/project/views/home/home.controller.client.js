@@ -55,7 +55,6 @@
         }
 
         function getBookDetails(bookId) {
-            console.log(bookId)
             // Go to book details page
             $location.url("/book/"+bookId);
         }

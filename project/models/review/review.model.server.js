@@ -6,38 +6,51 @@ module.exports = function () {
 
     var api = {
         createReview: createReview,
-        editReview: editReview,
+        updateReview: updateReview,
         deleteReview: deleteReview,
-        getReviewsByBookId: getReviewsByBookId,
+        deleteAllReviewsForUser: deleteAllReviewsForUser,
         getReviewsByGoogleBookId: getReviewsByGoogleBookId,
+        findReviewByGoogleBookIdAndUser: findReviewByGoogleBookIdAndUser,
+        deleteAllReviews: deleteAllReviews,
         setModel:setModel
     };
     return api;
-    
+
     function createReview(review) {
         return ReviewModel.create(review);
     }
 
-
-    function getReviewsByBookId(bid) {
-        return ReviewModel.find({_book: bid});
+    function getReviewsByGoogleBookId(googleBookId) {
+        return ReviewModel.find({googleBookId: googleBookId});
     }
 
-    function getReviewsByGoogleBookId(bid) {
-        return ReviewModel.find({googleBookId: bid});
+    function findReviewByGoogleBookIdAndUser(googleBookId, userId) {
+        return ReviewModel.find({googleBookId: googleBookId, _user: userId})
     }
 
-    function editReview(reviewid, review_text) {
-        return ReviewModel.update(
-            {_id: reviewid}, {review: review_text}
-        );
+    function updateReview(reviewid, review_text) {
+        return ReviewModel
+            .update({
+                _id: reviewid
+            }, {
+                $set: {
+                    review: review_text
+                }});
     }
 
     function deleteReview(reviewid) {
         return ReviewModel.remove({_id: reviewid});
     }
+
+    function deleteAllReviewsForUser(userId) {
+        return ReviewModel.remove({_user: userId});
+    }
+
+    function deleteAllReviews() {
+        return ReviewModel.remove();
+    }
+
     function setModel(_model) {
         model = _model;
     }
-
 };

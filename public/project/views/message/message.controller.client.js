@@ -25,7 +25,7 @@
                 })
                 .error(function (error) {
                 });
-            
+
             function setListOfFriendsToBeDisplayed(messages) {
                 var listOfFriendsIds = [];
                 var friendIdVsMessageStatus = {};
@@ -73,15 +73,34 @@
         }
     }
 
-    function MessageChatController($routeParams, $location, MessageService) {
+    function MessageChatController($routeParams, $location, UserService, MessageService) {
         var vm = this;
         var userId = $routeParams['uid'];
         var friendId = $routeParams['fid'];
 
         vm.userId = userId;
+        vm.nameOfFriend = "";
+        vm.listOfFriendIds = [];
         vm.sendMessage = sendMessage;
         vm.deleteMessage = deleteMessage;
         vm.navigateToProfile = navigateToProfile;
+        vm.getMessageTime = getMessageTime;
+        vm.checkIfOtherUserIsFriend = checkIfOtherUserIsFriend;
+        vm.addFriend = addFriend;
+
+        function listOfFriendIdsInit() {
+            UserService
+                .findFriendsForUser(userId)
+                .success(function (listOfFriends) {
+                    vm.listOfFriendIds = [];
+                    for (var f in listOfFriends) {
+                        vm.listOfFriendIds.push(listOfFriends[f]._id);
+                    }
+                })
+                .error(function (error) {
+                });
+        }
+        listOfFriendIdsInit();
 
         function init(isMarkingAsUnreadNecessary){
             MessageService
@@ -96,6 +115,12 @@
                 .error(function (err){
                     vm.info = "No messages found";
                 });
+            UserService
+                .findUserById(friendId)
+                .success(function (friend) {
+                    //vm.nameOfFriend = (friend.firstName + " " + friend.lastName).trim();
+                    vm.nameOfFriend = friend.firstName.trim();
+                })
         }
         init(true);
 
@@ -131,6 +156,27 @@
 
         function navigateToProfile() {
             $location.url("/user/" + userId);
+        }
+
+        function getMessageTime(dateCreated) {
+            var d = new Date(dateCreated);
+            return d.toDateString() + ", " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+        }
+
+        function checkIfOtherUserIsFriend() {
+            return (-1 < vm.listOfFriendIds.indexOf(friendId));
+        }
+
+        function addFriend() {
+            if (userId !== friendId) {
+                UserService
+                    .addFriend(userId, {_id: friendId})
+                    .success(function (response) {
+                        listOfFriendIdsInit();
+                    })
+                    .error(function (error) {
+                    });
+            }
         }
     }
 })();

@@ -11,6 +11,7 @@ module.exports = function() {
         getAllMessagesForUser: getAllMessagesForUser,
         setMessageStatusAsRead: setMessageStatusAsRead,
         deleteMessage: deleteMessage,
+        deleteAllMessages: deleteAllMessages,
         setModel: setModel
     };
     return api;
@@ -59,6 +60,10 @@ module.exports = function() {
                     return message.save();
                 }
             );
+    }
+
+    function deleteAllMessages() {
+        return MessageModel.remove();
     }
 
     function setModel(_model) {

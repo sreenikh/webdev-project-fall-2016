@@ -57,10 +57,23 @@
         vm.moveToBookshelf = moveToBookshelf;
         vm.createReview = createReview;
         vm.checkSafeHtml = checkSafeHtml;
+        vm.editOrUpdate = editOrUpdate;
+        vm.deleteReview = deleteReview;
 
         var bookshelvesForUser = [];
+        vm.bookshelf = {};
+        vm.bookshelf.type = null;
+        vm.reviews = [];
+        vm.userHasAlreadyReviewed = false;
+        vm.EDIT = "Edit";
+        vm.UPDATE = "Update";
+        vm.editUpdateString = "Edit";
+        vm.reviewOfThisUser = {review: ""};
 
         function init() {
+            vm.editUpdateString = "Edit";
+            vm.reviewOfThisUser = {review: ""};
+            vm.userHasAlreadyReviewed = false;
             BookshelfService
                 .findBookshelfById(bookshelfId)
                 .success(function (bookshelf) {
@@ -76,6 +89,25 @@
                         .success(function (info) {
                             vm.book = info;
                             console.log(info);
+                            ReviewService
+                                .getReviewsByGoogleBookId(book.googleBookId)
+                                .success(function (listOfReviews) {
+                                    vm.reviews = listOfReviews;
+                                    for (var r in vm.reviews) {
+                                        if (vm.reviews[r]._user == userId) {
+                                            vm.userHasAlreadyReviewed = true;
+                                            vm.reviewOfThisUser = vm.reviews[r];
+                                        }
+                                        UserService
+                                            .findUserById(vm.reviews[r]._user)
+                                            .success(function (foundUser) {
+                                                vm.reviews[r]['name'] = foundUser.firstName + " " + foundUser.lastName;
+                                            })
+                                    }
+                                })
+                                .error(function (error) {
+                                    console.log(error);
+                                })
                         })
                         .error(function (error) {
                         });
@@ -94,14 +126,6 @@
                 .findUserById(userId)
                 .success(function (user) {
                     vm.user = user;
-                })
-                .error(function (error) {
-                    console.log(error);
-                });
-            BookService
-                .findReviewsByBookId(bookId)
-                .success(function (reviews_list) {
-                    vm.reviews = reviews_list;
                 })
                 .error(function (error) {
                     console.log(error);
@@ -136,15 +160,41 @@
                 });
 
         }
+
         function createReview(review) {
-            console.log("In the function");
             ReviewService
-                .createReview(review,vm.user, vm.book )
-                .success(function () {
-                    console.log("Created review");
+                .createReview(review, vm.user, vm.book)
+                .success(function (response) {
+                    init();
                 })
                 .error(function (error) {
                 })
+        }
+
+        function editOrUpdate() {
+            if (vm.EDIT == vm.editUpdateString) {
+                vm.editUpdateString = vm.UPDATE;
+            } else if (vm.UPDATE == vm.editUpdateString) {
+                ReviewService
+                    .updateReview(vm.reviewOfThisUser._id, vm.reviewOfThisUser.review)
+                    .success(function (response) {
+                        init();
+                        vm.editUpdateString = vm.EDIT;
+                    })
+                    .error(function () {
+
+                    });
+            }
+        }
+
+        function deleteReview() {
+            ReviewService
+                .deleteReview(vm.reviewOfThisUser._id)
+                .success(function (response) {
+                    init();
+                })
+                .error(function (error) {
+                });
         }
 
         function checkSafeHtml(html) {
@@ -224,18 +274,11 @@
         var userId = $routeParams['uid'];
         var bookshelvesForUser = [];
 
-        /*vm.book = BookService
-            .findBookInfo(googleBookId)
-            .success(function (info) {
-                vm.book = info;
-                console.log(info);
-            })
-            .error(function (error) {
-            });*/
-
         vm.addToBookshelf = addToBookshelf;
         vm.createReview = createReview;
         vm.checkSafeHtml = checkSafeHtml;
+
+        vm.reviews = [];
 
         function init() {
             BookService
@@ -284,6 +327,9 @@
                     if ('volumeInfo' in vm.book) {
                         if ('title' in vm.book.volumeInfo) {
                             bookToBeCreated['title'] = vm.book.volumeInfo.title;
+                        }
+                        if ('authors' in vm.book.volumeInfo) {
+                            bookToBeCreated['authors'] = vm.book.volumeInfo.authors;
                         }
                         if ('publishedDate' in vm.book.volumeInfo) {
                             bookToBeCreated['publishedDate'] = vm.book.volumeInfo.publishedDate;

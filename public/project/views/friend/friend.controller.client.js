@@ -12,7 +12,7 @@
         vm.navigateToMessageFriend = navigateToMessageFriend;
         vm.addFriend = addFriend;
         vm.removeFriend = removeFriend;
-        vm.enlistFriends = enlistFriends;
+        vm.navigateToAllMessages = navigateToAllMessages;
 
         var userId = $routeParams['uid'];
 
@@ -34,8 +34,8 @@
             $location.url("/user/" + userId);
         }
 
-        function enlistFriends() {
-
+        function navigateToAllMessages() {
+            $location.url("/user/" + userId + "/message");
         }
 
         function searchForFriends(searchText) {
@@ -74,7 +74,7 @@
             UserService
                 .removeFriend(userId, friend)
                 .success(function (response) {
-                    $location.url("/user/" + userId + "/friend")
+                    init();
                 })
                 .error(function (error) {
                 });

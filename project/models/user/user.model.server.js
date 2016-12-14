@@ -17,10 +17,13 @@ module.exports = function () {
         findBookshelfObjectIdsForUser: findBookshelfObjectIdsForUser,
         findFriendObjectIdsForUser: findFriendObjectIdsForUser,
         findFriendsForUser: findFriendsForUser,
+        findAllUsers: findAllUsers,
         addFriend: addFriend,
         removeFriend: removeFriend,
         updateUser: updateUser,
+        makeAdmin: makeAdmin,
         deleteUser: deleteUser,
+        deleteAllUsers: deleteAllUsers,
         setModel: setModel
     };
     return api;
@@ -70,8 +73,8 @@ module.exports = function () {
 
     function findAllMatchingNames(name) {
         var searchJson = {$or: [{username: {'$regex': name, $options:'i'}},
-                                {firstName: {'$regex': name, $options:'i'}},
-                                {lastName: {'$regex': name, $options:'i'}}]};
+            {firstName: {'$regex': name, $options:'i'}},
+            {lastName: {'$regex': name, $options:'i'}}]};
         return UserModel.find(searchJson);
     }
 
@@ -113,6 +116,10 @@ module.exports = function () {
             );
     }
 
+    function findAllUsers() {
+        return UserModel.find();
+    }
+
     function addFriend(existingUserId, newUserId) {
         return UserModel
             .findById(existingUserId)
@@ -137,17 +144,29 @@ module.exports = function () {
     }
 
     function updateUser(userId, user) {
-        return UserModel.update({
-            _id: userId
-        }, {
-            $set: {
-                username: user.username,
-                password: user.password,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                phone: user.phone
-            }});
+        return UserModel
+            .update({
+                _id: userId
+            }, {
+                $set: {
+                    username: user.username,
+                    password: user.password,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    phone: user.phone
+                }});
+    }
+
+    function makeAdmin(userId) {
+        return UserModel
+            .update({
+               _id: userId
+            }, {
+                $set: {
+                    role: 'ADMIN'
+                }
+            });
     }
 
     function deleteUser(userId) {
@@ -187,6 +206,10 @@ module.exports = function () {
                 function (error) {
 
                 });
+    }
+
+    function deleteAllUsers() {
+        return UserModel.remove();
     }
 
     function setModel(_model) {

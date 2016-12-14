@@ -6,6 +6,7 @@ module.exports = function (app, model) {
     app.get('/api/bookshelf/:bookshelfId', findBookshelfById);
     app.put('/api/bookshelf/:bookshelfId', updateBookshelf);
     app.delete('/api/bookshelf/:bookshelfId', deleteBookshelf);
+    app.delete('/api/admin/deleteAllBookshelves', deleteAllBookshelves);
 
     function createBookshelf(req, res) {
         var userId = req.params.userId;
@@ -74,6 +75,20 @@ module.exports = function (app, model) {
         model
             .bookshelfModel
             .deleteBookshelf(bookshelfId)
+            .then(
+                function (response) {
+                    res.send(true);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            );
+    }
+
+    function deleteAllBookshelves(req, res) {
+        model
+            .bookshelfModel
+            .deleteAllBookshelves()
             .then(
                 function (response) {
                     res.send(true);

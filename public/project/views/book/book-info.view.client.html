@@ -52,36 +52,35 @@
                             <td class="col-xs-3">Average Rating:</td>
                             <td class="col-xs-6">{{model.book.volumeInfo.averageRating}}</td>
                         </tr>
+                        <tr>
+                            <td class="col-xs-3">Rating Count:</td>
+                            <td class="col-xs-6">{{model.book.volumeInfo.ratingsCount}}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
+            <div class="container-fluid row">
+                <h4>Brief Description:</h4>
+                <div ng-bind-html="model.checkSafeHtml(model.book.volumeInfo.description)"
+                     class="container-fluid zero-right-padding text-justify"></div>
+                <h4><br/></h4>
+            </div>
+            <br>
+            <h4 ng-show="0 != model.reviews.length">Reviews:</h4>
+            <div>
+                <ul class="list-group">
+                    <li ng-repeat="review in model.reviews" class="list-group-item book-individual-review">
+                        <p class="list-group-item-heading reviewer">Reviewer: {{review.firstName}} {{review.lastName}}</p>
+                        <p class="list-group-item-text">{{review.review}}</p>
+                    </li>
+                </ul>
+            </div>
+            <div ng-show="model.reviewError" class="alert alert-danger add-to-book-shelf" role="alert">
+                {{model.reviewError}}
+            </div>
         </div>
-        <div class="container-fluid row">
-            <h4>Brief Description:</h4>
-            <div ng-bind-html="model.checkSafeHtml(model.book.volumeInfo.description)"
-                 class="container-fluid zero-right-padding text-justify"></div>
-            <h4><br/></h4>
-        </div>
-    </div>
-    <br>
-    <div class="container-fluid form-group">
-        <label for="yourReview">Add Your Review:</label>
-        <textarea class="form-control" rows="5" id="yourReview"ng-model="model.review"></textarea>
-        <a ng-click="model.createReview(model.review)" class="btn btn-block btn-primary">Submit</a>
-        <a ng-show="model.enableEdit" ng-click="model.editReview(model.reviewId, model.review)" class="btn btn-block btn-info">Edit this review</a>
-    </div>
-    <div>
-        <ul class="list-group">
-            <li ng-repeat="review in model.reviews" class="list-group-item book-individual-review">
-                <a ng-click="model.deleteReview(review)" class="pull-right"><i class="fa fa-trash" aria-hidden="true"></i></i></a>
-                <p class="list-group-item-heading reviewer">Reviewer: {{review.firstName}} {{review.lastName}}</p>
-                <p class="list-group-item-text">{{review.review}}</p>
-            </li>
-        </ul>
-    </div>
-    <div ng-show="model.reviewError" class="alert alert-danger add-to-book-shelf" role="alert">
-        {{model.reviewError}}
     </div>
 
     <nav class="navbar navbar-default navbar-fixed-bottom">
@@ -96,5 +95,4 @@
             </div>
         </div>
     </nav>
-
 </div>

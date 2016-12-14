@@ -25,26 +25,23 @@
                 </span>
             </div>
             <br>
-            <div class="row">
-                <div ng-repeat="book in model.books" ng-click="model.navigateToBookView(book)">
-                    <div class="row">
-                        <div class="col-sm-6">
-                        <img class="foo center-block" ng-src="{{book.volumeInfo.imageLinks.thumbnail}}" class="book-detail-poster">
-                         </div>
-                        <div>
-                        <h4 class="star list-group-item-heading float-right">{{book.volumeInfo.title}}</h4>
-                        <ul class="list-unstyled ">
-                            <li class="inline"  ng-repeat="author in book.volumeInfo.authors">
-                                {{author}}
+            <div ng-repeat="book in model.books" ng-click="model.navigateToBookView(book)">
+                <div class="row widget-list-element-top-bottom-margin">
+                    <div class="col-xs-2 pointer">
+                        <img ng-src="{{book.volumeInfo.imageLinks.smallThumbnail}}" height="75px">
+                    </div>
+                    <div class="col-xs-10 pointer">
+                        <h4 class="bold zero-margin-top">
+                            {{book.volumeInfo.title}}<h6 class="italic zero-margin-top">{{book.volumeInfo.subtitle}}</h6>
+                        </h4>
+                        <ul class="list-inline zero-margin-bottom">
+                            <li class="inline" ng-repeat="author in book.volumeInfo.authors">
+                                <h5 class="zero-margin-bottom">&bull; {{author}}</h5>
                             </li>
                         </ul>
-                        <p class="list-group-item-text">{{book.volumeInfo.subtitle}}</p>
-
-                        </div>
-
                     </div>
-                    <br>
                 </div>
+                <br/>
             </div>
         </div>
     </div>

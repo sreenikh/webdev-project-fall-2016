@@ -6,6 +6,7 @@ module.exports = function(app, model){
     app.get("/api/message/from/:fromId/to/:toId", getMessagesFromOneUserToAnotherUser);
     app.put("/api/message/markasread/:messageId", setMessageStatusAsRead);
     app.delete("/api/message/:messageId", deleteMessage);
+    app.delete('/api/admin/deleteAllMessages', deleteAllMessages);
 
     function createMessage(req, res) {
         var message = req.body;
@@ -75,5 +76,18 @@ module.exports = function(app, model){
             );
     }
 
+    function deleteAllMessages(req, res) {
+        model
+            .messageModel
+            .deleteAllMessages()
+            .then(
+                function (response) {
+                    res.send(true);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            );
+    }
 };
 
