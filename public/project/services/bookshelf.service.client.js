@@ -6,6 +6,7 @@
         .factory("BookshelfService", bookshelfService);
 
     function bookshelfService($http) {
+
         var api = {
             createBookshelf: createBookshelf,
             findBookshelvesForUser: findBookshelvesForUser,

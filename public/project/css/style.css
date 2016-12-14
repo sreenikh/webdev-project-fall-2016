@@ -4,6 +4,11 @@ input.form-control {
 
 body {
     padding-top: 36px;
+
+}
+
+.backgroundGrayLightest {
+    background: #fafafa!important;
 }
 
 .profile-body {
@@ -141,6 +146,9 @@ body {
 
 .text-left-align {
     text-align: left;
+}
+.text-center-align {
+    text-align: center;
 }
 
 .text-right-align {
@@ -299,4 +307,12 @@ body{
 }
 .glyph {
     padding-right: 2px;
+}
+
+.textOverflow {
+textOverflow : "ellipsis"
+}
+
+.headerIcon {
+    padding-top: 15px;
 }

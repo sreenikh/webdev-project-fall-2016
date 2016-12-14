@@ -214,7 +214,7 @@
                 })
         }
     }
-    function UserHomeController($routeParams, $location, UserService) {
+    function UserHomeController($routeParams, $location, UserService,BookshelfService,BookService) {
         var vm = this;
         vm.enlistBookshelves = enlistBookshelves;
         vm.enlistFriends = enlistFriends;
@@ -224,8 +224,17 @@
         vm.navigateToMessages = navigateToMessages;
         vm.unregisterUser = unregisterUser;
         vm.logout = logout;
+        vm.enlistBooks = enlistBooks;
+        vm.navigateToProfile = navigateToProfile;
+        vm.navigateToSearchBooks = navigateToSearchBooks;
+        vm.compareBookshelfType = compareBookshelfType;
+        vm.navigateToBookDetails = navigateToBookDetails;
+        vm.getBooksByBookShelfId = getBooksByBookShelfId;
 
         var userId = $routeParams.uid;
+
+        vm.bookshelves = [];
+        vm.booksByBookshelf = {};
 
         function init() {
             UserService
@@ -237,8 +246,45 @@
                 })
                 .error(function (error) {
                 });
+
+            var count = 0;
+            BookshelfService
+                .findBookshelvesForUser(userId)
+                .success(function (bookshelves) {
+                    if ('0' !== bookshelves) {
+                        vm.bookshelves = bookshelves;
+                        for(var bs in bookshelves) {
+                            var current_bsid = bookshelves[bs]._id;
+                            BookService
+                                .findBooksForBookshelf(current_bsid)
+                                .success(function (books) {
+                                    if ('0' !== books) {
+                                        var idToBeAssigned = books[0]._bookshelf
+                                        vm.booksByBookshelf[idToBeAssigned] = books;
+                                        if (2 == count) {
+                                            console.log(vm.booksByBookshelf)
+                                        }
+                                    }
+                                })
+                                .error(function (error) {
+                                });
+
+                        }
+                    }
+                })
+                .error(function (error) {
+                });
+
         }
         init();
+
+        function compareBookshelfType(actualType, expectedType) {
+            if(actualType===expectedType) {
+                return true;
+            } else {
+                return false
+            }
+        }
 
         function enlistBookshelves(user) {
             console.log(user);
@@ -275,10 +321,6 @@
                 });
         }
 
-        function navigateToProfile() {
-            $location.url("/user/" + userId);
-        }
-
         function navigateToListOfFriends(user) {
             $location.url("/user/" + userId + "/friend");
         }
@@ -308,6 +350,37 @@
                 .success(function () {
                     $location.url("/login");
                 })
+        }
+
+        function enlistBooks(bookshelf) {
+            var bsId = bookshelf._id;
+            $location.url("/user/" + userId + "/bookshelf/" + bsId + "/book");
+        }
+
+        function navigateToProfile() {
+            $location.url("/user/" + userId);
+        }
+
+        function navigateToBookDetails(bookshelfId,book) {
+            var bookId = book._id;
+            $location.url("/user/" + userId + "/bookshelf/" + bookshelfId + "/book/" + bookId);
+        }
+
+        function navigateToSearchBooks() {
+            $location.url("/user/" + userId + "/book/search");
+        }
+
+        function getBooksByBookShelfId(bsid) {
+            BookService
+                .findBooksForBookshelf(bsid)
+                .success(function (books) {
+                    if ('0' !== books) {
+                         //vm.currBooks = books;
+                    }
+                })
+                .error(function (error) {
+                });
+
         }
     }
 

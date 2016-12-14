@@ -2,12 +2,12 @@
     <div class="row">
         <div class="container-fluid">
             <div class="col-md-4">
-                <p class="navbar-text pull-left">
-                    <a ng-click="model.navigateToProfile()"
-                       class="pointer">
-                        <span class="glyphicon glyphicon-menu-left "></span>
-                    </a>
-                </p>
+                <!--<p class="navbar-text pull-left">-->
+                    <!--<a ng-click="model.navigateToProfile()"-->
+                       <!--class="pointer">-->
+                        <!--<span class="glyphicon glyphicon-menu-left "></span>-->
+                    <!--</a>-->
+                <!--</p>-->
 
                     <a ng-click="model.navigateToProfile()"
                        class="navbar-text"><b class="">Hello {{model.user.firstName}} {{model.user.lastName}}!</b></a>
@@ -28,24 +28,37 @@
     </div>
 </nav>
 
-<div class="container-fluid">
-        <br>
+<div class="container-fluid profile-body">
     <br>
-        <p>Add books to your bookshelves, and keep track of your reading.</p>
-        <p>Looking for some inspiration? Check out Bill Gates' <a href="https://www.gatesnotes.com/Books#All">fabulous blog on reading.</a> </p>
-    <!--<a ng-click="model.enlistBookshelves(model.user)"-->
-           <!--class="btn btn-primary btn-block">Bookshelves</a>-->
-    <div class="col-sm-4">
-        <a href="#"
-           class="btn btn-primary btn-block">Want to Read</a> </div>
-    <div class="col-sm-4">
-        <a href="#"
-           class="btn btn-info btn-block">Currently Reading</a>
+    <br>
+    <h3 class="text-center-align">Remember what you were reading? </h3>
+    <br>
+    <div>
+        <div class="row container-fluid list-group panel panel-block ">
+            <div ng-repeat="bookshelf in model.bookshelves"
+                class="col-sm-4 list-group-item no-border zero-left-padding zero-right-padding">
+                 <!--style="max-height:300px ; min-height:300px; overflow-y: scroll;">-->
+                <button type="button"
+                        ng-click="model.enlistBooks(bookshelf)"
+                        class="btn btn-block btn-lg"
+                        ng-class="{'btn-primary': model.compareBookshelfType(bookshelf.type,'TO_READ'),
+                                    'btn-warning': model.compareBookshelfType(bookshelf.type,'READ'),
+                                    'btn-success': model.compareBookshelfType(bookshelf.type, 'CURRENTLY_READING')}">
+                    {{model.compareBookshelfType(bookshelf.type,'TO_READ') ? 'To be read' : model.compareBookshelfType(bookshelf.type,'READ') ? 'Previously read' : 'Currently Reading'}}
+                </button>
+
+                <div ng-repeat="book in model.booksByBookshelf[bookshelf._id]"
+                    class="text-center-align list-group-item no-border">
+                    <a id="title" ng-click="model.navigateToBookDetails(bookshelf._id,book)"
+                       class="pointer">
+                        <i> {{book.title}} </i>
+                    </a>
+
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-4">
-        <a href="#"
-           class="btn btn-info btn-block">Finished Reading</a>
-    </div>
+ </div>
 
     <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container-fluid navbar-footer bg-primary">
