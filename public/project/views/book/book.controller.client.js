@@ -232,6 +232,8 @@
         vm.searchForBooks = searchForBooks;
         vm.navigateToBookView = navigateToBookView;
         vm.navigateToMessages = navigateToMessages;
+        vm.navigateToBookshelf = navigateToBookshelf;
+        vm.navigateToUserHome = navigateToUserHome;
 
         vm.books = [];
 
@@ -241,8 +243,16 @@
             $location.url("/user/" + userId);
         }
 
+        function navigateToUserHome() {
+            $location.url("/user/" + userId+"/home");
+        }
+
         function navigateToMessages(user) {
             $location.url("/user/" + userId + "/message");
+        }
+
+        function navigateToBookshelf() {
+            $location.url("/user/" + userId + "/bookshelf/"+vm.bookshelf.name);
         }
 
         function searchForBooks() {
@@ -270,6 +280,7 @@
         vm.searchForBooks = searchForBooks;
         vm.navigateToBookView = navigateToBookView;
         vm.navigateToMessages = navigateToMessages;
+        vm.navigateToUserHome = navigateToUserHome;
 
         vm.books = [];
 
@@ -277,6 +288,9 @@
 
         function navigateToProfile() {
             $location.url("/user/" + userId);
+        }
+        function navigateToUserHome() {
+            $location.url("/user/" + userId+"/home");
         }
 
         function searchForBooks() {
@@ -433,6 +447,10 @@
     function PublicBookInfoController($routeParams, $location, BookshelfService, BookService, UserService, ReviewService) {
         var vm = this;
         var googleBookId = $routeParams.googleBookId;
+        vm.navigateToUserHome = navigateToUserHome;
+        vm.navigateToProfile = navigateToProfile;
+        vm.navigateToMessages = navigateToMessages;
+
         vm.book = BookService
             .findBookInfo(googleBookId)
             .success(function (info) {
@@ -463,6 +481,10 @@
         }
 
         init();
+        function navigateToUserHome() {
+            $location.url("/user/" + userId+"/home");
+        }
+
         function navigateToProfile() {
             $location.url("/user/" + userId);
         }
