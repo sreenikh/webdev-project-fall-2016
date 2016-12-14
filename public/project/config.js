@@ -138,6 +138,9 @@
                     checkLogin: checkLogin
                 }
             })
+            .when("/about", {
+                templateUrl: "views/home/about.view.client.html"
+            })
             .otherwise({
                 redirectTo: "/login"
             });

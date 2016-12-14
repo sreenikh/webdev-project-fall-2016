@@ -36,7 +36,7 @@
                     if ('0' === user) {
                         vm.error = "Invalid username or password";
                     } else {
-                        $location.url("/user/" + user._id);
+                        $location.url("/user/" + user._id+"/home");
                     }
                 })
                 .error(function (e) {

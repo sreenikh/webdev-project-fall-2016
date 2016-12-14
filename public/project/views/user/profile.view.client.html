@@ -53,27 +53,29 @@
             </div>
         <div class="col-sm-4">
         <a ng-click="model.enlistBookshelves(model.user)"
-           class="btn btn-primary btn-block">Bookshelves</a>
+           class="btn btn-primary btn-block">Your Bookshelves</a>
             </div>
         <br>
         <br>
-        <a ng-click="model.logout()"
-           class="btn btn-danger btn-block">Logout</a>
+        <div class="container-fluid">
         <a ng-click="model.navigateToAdminOptions(model.user)"
            ng-show="'ADMIN' == model.user.role"
            class="btn btn-success btn-block">Admin Options</a>
         <a ng-click="model.unregisterUser(model.user)"
-           class="btn btn-warning btn-block">Unregister</a>
+           class="btn btn-default btn-block">Unregister</a>
+        </div>
     </div>
 
     <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container-fluid navbar-footer bg-primary">
             <div class="row navbar-text navbar-right">
+
                 <div class="col-xs-12 container text-center">
-                    <a ng-click="model.navigateToProfile()"
-                       class="pointer">
-                        <span class="glyphicon glyphicon-user footer-color-white pull-right"></span>
-                    </a>
+                    <!--<a ng-click="model.navigateToProfile()"-->
+                       <!--class="pointer">-->
+                        <!--<span class="glyphicon glyphicon-user footer-color-white pull-right"></span>-->
+                    <!--</a>-->
+                        <a ng-click="model.navigateToProfile()"> <i class="fa fa-sign-out headerIcon header-color-white" aria-hidden="true"></i></a>
                 </div>
             </div>
         </div>

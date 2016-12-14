@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="row">
-        <div class="container-fluid">
-            <div class="col-md-4">
+        <div class="container-fluid bg-primary">
+            <div class="col-md-4 ">
                 <!--<p class="navbar-text pull-left">-->
                     <!--<a ng-click="model.navigateToProfile()"-->
                        <!--class="pointer">-->
@@ -10,15 +10,15 @@
                 <!--</p>-->
 
                     <a ng-click="model.navigateToProfile()"
-                       class="navbar-text"><b class="">Hello {{model.user.firstName}} {{model.user.lastName}}!</b></a>
+                       class="navbar-text "><b class="header-color-white">Hello {{model.user.firstName}} {{model.user.lastName}}!</b></a>
             </div>
             <div class="col-md-offset-4 col-md-4">
                 <div class="navbar-text pull-right">
                     <ul id="mylist" class="list-inline">
-                        <li id="item1" ng-click="model.navigateToListOfFriends(model.user)" class="list-inline-item">
+                        <li id="item1" ng-click="model.navigateToListOfFriends(model.user)" class="list-inline-item header-color-white">
                             <i class="fa fa-users" aria-hidden="true"></i>
                         </li>
-                        <li id="item2" ng-click="model.navigateToMessages(model.user)" class="list-inline-item">
+                        <li id="item2" ng-click="model.navigateToMessages(model.user)" class="list-inline-item header-color-white">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
                         </li>
                     </ul>
@@ -27,6 +27,7 @@
         </div>
     </div>
 </nav>
+
 
 <div class="container-fluid profile-body">
     <br>
