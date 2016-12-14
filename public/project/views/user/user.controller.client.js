@@ -143,7 +143,7 @@
         function enlistBookshelves(user) {
             console.log(user);
             if (null !== user) {
-                $location.url("/user/" + user._id + "/bookshelf");
+                $location.url("/user/" + user._id + "/home");
             }
         }
 
