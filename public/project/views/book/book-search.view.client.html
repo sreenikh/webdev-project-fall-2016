@@ -1,13 +1,24 @@
 <div>
     <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid bg-primary row">
-            <div class="container-fluid">
-                <p class="navbar-text pull-left">
+        <div class="row">
+            <div class="container-fluid bg-primary">
+                <div class="col-md-4">
+                    <p class="navbar-text pull-left">
                     <a ng-click="model.navigateToUserHome()"
                        class="pointer">
-                        <span class="glyphicon glyphicon-menu-left header-color-white"></span></a>
-                </p>
-                <a class="navbar-brand"><b class="header-color-white navbar-brand">Search Books</b></a>
+                        <span class="glyphicon glyphicon-menu-left header-color-white"></span>
+                    </a>
+                    </p>
+                    <a class="navbar-brand"><b class="header-color-white">Book search</b></a>
+                </div>
+                <!--<div class="col-md-offset-4 col-md-4">
+                    <p class="navbar-text pull-right">
+                        <a ng-click="model.navigateToSearchBooks()"
+                           class="pointer">
+                            <span class="glyphicon glyphicon-search header-color-white"></span>
+                        </a>
+                    </p>
+                </div>-->
             </div>
         </div>
     </nav>

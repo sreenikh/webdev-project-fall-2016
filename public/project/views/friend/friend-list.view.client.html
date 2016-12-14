@@ -11,14 +11,14 @@
                     </p>
                     <a class="navbar-brand"><b class="header-color-white">Friends</b></a>
                 </div>
-                <div class="col-md-offset-4 col-md-4">
+                <!--<div class="col-md-offset-4 col-md-4">
                     <p class="navbar-text pull-right">
                         <a ng-click="model.navigateToSearchFriends()"
                            class="pointer">
                             <span class="glyphicon glyphicon-search header-color-white"></span>
                         </a>
                     </p>
-                </div>
+                </div>-->
             </div>
         </div>
     </nav>
@@ -91,12 +91,12 @@
                             <span class="bold"> {{friend.firstName}} {{friend.lastName}}</span>
                         </h5>
                     </div>
-                    <div class="col-xs-4 zero-right-padding">
-                        <div class="btn-group btn-block pull-right" data-toggle="buttons-radio">
-                            <button ng-click="model.navigateToMessageFriend(friend)"
-                                    class="btn btn-warning">Message</button>
+                    <div class="col-xs-4">
+                        <div class="btn-group btn-block list-cell-element-right-padding" data-toggle="buttons-radio">
                             <button ng-click="model.removeFriend(user)"
-                                    class="btn btn-danger">Remove Friend</button>
+                                    class="btn btn-danger pull-right">Remove Friend</button>
+                            <button ng-click="model.navigateToMessageFriend(friend)"
+                                    class="btn btn-warning pull-right">Message</button>
                         </div>
                     </div>
                 </div>

@@ -7,7 +7,7 @@
                        class="pointer">
                         <span class="glyphicon glyphicon-menu-left header-color-white"></span></a>
                 </p>
-                <a class="navbar-brand"><b>Books</b></a>
+                <a class="navbar-brand"><b class="header-color-white">Books</b></a>
             </div>
             <!--<a class="navbar-brand"><b>Books</b></a>-->
         </div>
@@ -85,8 +85,8 @@
             <div>
                 <ul class="list-group">
                     <li ng-repeat="review in model.reviews" class="list-group-item book-individual-review">
-                        <p class="list-group-item-heading reviewer">Reviewer: {{review.name}}</p>
-                        <p class="list-group-item-text">{{review.review}}</p>
+                        <p class="list-group-item-heading reviewer"><b>{{review.name}}:</b></p>
+                        <p class="list-group-item-text"><i>{{review.review}}</i></p>
                     </li>
                 </ul>
             </div>

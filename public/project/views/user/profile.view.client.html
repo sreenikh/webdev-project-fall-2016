@@ -62,8 +62,9 @@
            ng-show="'ADMIN' == model.user.role"
            class="btn btn-success btn-block">Admin Options</a>
         <a ng-click="model.unregisterUser(model.user)"
-           class="btn btn-default btn-block">Unregister</a>
+           class="btn btn-warning btn-block">Unregister</a>
         </div>
+        <br/>
     </div>
 
     <nav class="navbar navbar-default navbar-fixed-bottom">
@@ -75,8 +76,8 @@
                        <!--class="pointer">-->
                         <!--<span class="glyphicon glyphicon-user footer-color-white pull-right"></span>-->
                     <!--</a>-->
-                    <div ng-click="model.logout()" class="header-color-white">
-                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    <div ng-click="model.logout()" class="header-color-white pointer">
+                        <p>Logout <i class="fa fa-sign-out" aria-hidden="true"></i></p>
                     </div>
                 </div>
             </div>

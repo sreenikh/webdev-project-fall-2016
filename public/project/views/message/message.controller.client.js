@@ -87,6 +87,7 @@
         vm.getMessageTime = getMessageTime;
         vm.checkIfOtherUserIsFriend = checkIfOtherUserIsFriend;
         vm.addFriend = addFriend;
+        vm.navigateToAllMessages = navigateToAllMessages;
 
         function listOfFriendIdsInit() {
             UserService
@@ -156,6 +157,10 @@
 
         function navigateToProfile() {
             $location.url("/user/" + userId);
+        }
+
+        function navigateToAllMessages() {
+            $location.url("/user/" + userId + "/message");
         }
 
         function getMessageTime(dateCreated) {

@@ -20,6 +20,9 @@
         vm.navigateToSearchBooks = navigateToSearchBooks;
         vm.navigateToProfile = navigateToProfile;
         vm.navigateToMessages = navigateToMessages;
+        vm.navigateToUserHome = navigateToUserHome;
+
+        vm.books = [];
 
         function init() {
             BookService
@@ -38,6 +41,11 @@
         function navigateToProfile() {
             $location.url("/user/" + userId);
         }
+
+        function navigateToUserHome () {
+            $location.url("/user/" + userId + "/home");
+        }
+
         function navigateToMessages(user) {
             $location.url("/user/" + userId + "/message");
         }
@@ -115,12 +123,12 @@
                                             .findUserById(vm.reviews[r]._user)
                                             .success(function (foundUser) {
                                                 vm.reviews[r]['name'] = foundUser.firstName + " " + foundUser.lastName;
-                                            })
+                                            });
                                     }
                                 })
                                 .error(function (error) {
                                     console.log(error);
-                                })
+                                });
                         })
                         .error(function (error) {
                         });
@@ -155,7 +163,7 @@
         }
 
         function navigateToBookshelf() {
-            $location.url("/user/" + userId + "/bookshelf/"+vm.bookshelf.name);
+            $location.url("/user/" + userId + "/bookshelf/" + vm.bookshelf.name);
         }
 
         function checkBookshelf(bookshelfType) {
@@ -252,7 +260,7 @@
         }
 
         function navigateToBookshelf() {
-            $location.url("/user/" + userId + "/bookshelf/"+vm.bookshelf.name);
+            $location.url("/user/" + userId + "/bookshelf/" + vm.bookshelf.name);
         }
 
         function searchForBooks() {
@@ -331,6 +339,7 @@
         vm.navigateToBookshelf = navigateToBookshelf;
         vm.navigateToProfile = navigateToProfile;
         vm.navigateToMessages = navigateToMessages;
+        vm.navigateToUserHome = navigateToUserHome;
 
         vm.reviews = [];
 
@@ -362,6 +371,17 @@
                 .findReviewsByGoogleBookId(googleBookId)
                 .success(function (reviews_list) {
                     vm.reviews = reviews_list;
+                    for (var r in vm.reviews) {
+                        if (vm.reviews[r]._user == userId) {
+                            vm.userHasAlreadyReviewed = true;
+                            vm.reviewOfThisUser = vm.reviews[r];
+                        }
+                        UserService
+                            .findUserById(vm.reviews[r]._user)
+                            .success(function (foundUser) {
+                                vm.reviews[r]['name'] = foundUser.firstName + " " + foundUser.lastName;
+                            });
+                    }
                 })
                 .error(function (error) {
                     console.log(error);
@@ -371,12 +391,17 @@
         init();
 
         function navigateToBookshelf() {
-            $location.url("/user/" + userId + "/bookshelf/"+vm.bookshelf.name);
+            $location.url("/user/" + userId + "/bookshelf/" + vm.bookshelf.name);
         }
 
         function navigateToProfile() {
             $location.url("/user/" + userId);
         }
+
+        function navigateToUserHome() {
+            $location.url("/user/" + userId + "/home");
+        }
+
         function navigateToMessages(user) {
             $location.url("/user/" + userId + "/message");
         }
@@ -421,7 +446,7 @@
                         .createBook(bookshelf._id, bookToBeCreated)
                         .success(function (newBook) {
                             console.log(newBook);
-                            $location.url("/user/" + userId + "/bookshelf");
+                            $location.url("/user/" + userId + "/bookshelf/" + newBook._bookshelf + "/book");
                         })
                         .error(function (error) {
                         });
@@ -437,7 +462,7 @@
                     console.log("Created review");
                 })
                 .error(function (error) {
-                })
+                });
         }
 
         function checkSafeHtml(html) {

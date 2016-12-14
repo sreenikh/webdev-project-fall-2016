@@ -3,11 +3,11 @@
         <div class="container-fluid row bg-primary">
             <div class="container-fluid">
                 <p class="navbar-text pull-left">
-                    <a ng-click="model.navigateToBookshelf()"
+                    <a ng-click="model.navigateToUserHome()"
                        class="pointer">
                         <span class="glyphicon glyphicon-menu-left header-color-white"></span></a>
                 </p>
-                <a class="navbar-brand"><b>Book Details</b></a>
+                <a class="navbar-brand"><b class="header-color-white">Book Details</b></a>
             </div>
         </div>
 
@@ -73,8 +73,8 @@
             <div>
                 <ul class="list-group">
                     <li ng-repeat="review in model.reviews" class="list-group-item book-individual-review">
-                        <p class="list-group-item-heading reviewer">Reviewer: {{review.firstName}} {{review.lastName}}</p>
-                        <p class="list-group-item-text">{{review.review}}</p>
+                        <p class="list-group-item-heading reviewer"><b>{{review.name}}:</b></p>
+                        <p class="list-group-item-text"><i>{{review.review}}</i></p>
                     </li>
                 </ul>
             </div>

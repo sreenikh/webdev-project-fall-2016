@@ -220,6 +220,7 @@
         vm.enlistFriends = enlistFriends;
         vm.saveProfile = saveProfile;
         vm.navigateToProfile = navigateToProfile;
+        vm.navigateToSearchBooks = navigateToSearchBooks;
         vm.navigateToListOfFriends = navigateToListOfFriends;
         vm.navigateToMessages = navigateToMessages;
         vm.unregisterUser = unregisterUser;
@@ -259,11 +260,10 @@
                                 .findBooksForBookshelf(current_bsid)
                                 .success(function (books) {
                                     if ('0' !== books) {
-                                        var idToBeAssigned = books[0]._bookshelf
-                                        vm.booksByBookshelf[idToBeAssigned] = books;
-                                        if (2 == count) {
-                                            console.log(vm.booksByBookshelf)
+                                        if (0 != books.length) {
+                                            var idToBeAssigned = books[0]._bookshelf;
                                         }
+                                        vm.booksByBookshelf[idToBeAssigned] = books;
                                     }
                                 })
                                 .error(function (error) {
@@ -319,6 +319,10 @@
                 })
                 .error(function (error) {
                 });
+        }
+
+        function navigateToSearchBooks(user) {
+            $location.url("/user/" + userId + "/book/search");
         }
 
         function navigateToListOfFriends(user) {
@@ -398,6 +402,7 @@
 
         vm.options = options;
         vm.submitOption = submitOption;
+        vm.navigateToUserHome = navigateToUserHome;
 
         function submitOption(optionIndex) {
             if (0 == optionIndex) {
@@ -427,6 +432,10 @@
                 $location.url("/");
             }
         }
+
+        function navigateToUserHome() {
+            $location.url("/user/" + adminId + "/home")
+        }
     }
 
     function AdminOptionsController($routeParams, $location, UserService) {
@@ -439,6 +448,7 @@
         vm.search = search;
         vm.makeAdmin = makeAdmin;
         vm.evictReader = evictReader;
+        vm.navigateToUserHome = navigateToUserHome;
 
         function init(optionIndex) {
             if (0 == optionIndex) {
@@ -485,6 +495,10 @@
                 })
                 .error(function (error) {
                 });
+        }
+
+        function navigateToUserHome() {
+            $location.url("/user/" + adminId + "/home")
         }
     }
 })();
